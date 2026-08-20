@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Color Variables (Theme: Cyber Teal / Default) ─────── */
+:root {
+  --bg-base:        #0a0c0f;
+  --bg-surface:     #101318;
+  --bg-panel:       #141820;
+  --bg-card:        #1a1f29;
+  --bg-hover:       #1f2535;
+  --border-dim:     #1e2330;
+  --border-def:     #252c3a;
+  --border-strong:  #333d52;
+  --accent:         #00d4c8;
+  --accent-dim:     rgba(0, 212, 200, 0.12);
+  --accent-glow:    rgba(0, 212, 200, 0.25);
+  --text-primary:   #e2e8f0;
+  --text-secondary: #8892a4;
+  --text-muted:     #4a5568;
+  --status-dev:     #3b82f6;
+  --status-test:    #f59e0b;
+  --status-prod:    #10b981;
+  --status-hold:    #6b7280;
+  --status-bug:     #ef4444;
+}
+
+/* ─── Theme 2: Matrix / Terminal Green ───────────────────────── */
+[data-theme="matrix-green"] {
+  --bg-base:        #040805;
+  --bg-surface:     #08120a;
+  --bg-panel:       #0d1c10;
+  --bg-card:        #122617;
+  --bg-hover:       #17331f;
+  --border-dim:     #17301d;
+  --border-def:     #1e4027;
+  --border-strong:  #2d603a;
+  --accent:         #00ff66;
+  --accent-dim:     rgba(0, 255, 102, 0.12);
+  --accent-glow:    rgba(0, 255, 102, 0.25);
+  --text-primary:   #dcfce7;
+  --text-secondary: #86efac;
+  --text-muted:     #22c55e60;
+  --status-dev:     #38bdf8;
+  --status-test:    #eab308;
+  --status-prod:    #00ff66;
+  --status-hold:    #6b7280;
+  --status-bug:     #f87171;
+}
+
+/* ─── Theme 3: Solar Amber / Tactical ────────────────────────── */
+[data-theme="solar-amber"] {
+  --bg-base:        #0a0805;
+  --bg-surface:     #14100a;
+  --bg-panel:       #1c160e;
+  --bg-card:        #261e14;
+  --bg-hover:       #33281a;
+  --border-dim:     #2b2114;
+  --border-def:     #3d2e1c;
+  --border-strong:  #5c452a;
+  --accent:         #f59e0b;
+  --accent-dim:     rgba(245, 158, 11, 0.12);
+  --accent-glow:    rgba(245, 158, 11, 0.25);
+  --text-primary:   #fef3c7;
+  --text-secondary: #fde68a;
+  --text-muted:     #b4530980;
+  --status-dev:     #60a5fa;
+  --status-test:    #f59e0b;
+  --status-prod:    #34d399;
+  --status-hold:    #78716c;
+  --status-bug:     #ef4444;
+}
+
+/* ─── Theme 4: Electric Cobalt / Deep Blue ───────────────────── */
+[data-theme="electric-cobalt"] {
+  --bg-base:        #060a14;
+  --bg-surface:     #0b1222;
+  --bg-panel:       #101b33;
+  --bg-card:        #152445;
+  --bg-hover:       #1c305c;
+  --border-dim:     #18284d;
+  --border-def:     #223a6e;
+  --border-strong:  #3458a6;
+  --accent:         #38bdf8;
+  --accent-dim:     rgba(56, 189, 248, 0.12);
+  --accent-glow:    rgba(56, 189, 248, 0.25);
+  --text-primary:   #e0f2fe;
+  --text-secondary: #bae6fd;
+  --text-muted:     #38bdf860;
+  --status-dev:     #38bdf8;
+  --status-test:    #fbbf24;
+  --status-prod:    #10b981;
+  --status-hold:    #64748b;
+  --status-bug:     #f43f5e;
+}
+
+/* ─── Theme 5: Synthwave / Neon Violet ───────────────────────── */
+[data-theme="synthwave-purple"] {
+  --bg-base:        #0a0614;
+  --bg-surface:     #120a22;
+  --bg-panel:       #1a0f33;
+  --bg-card:        #241545;
+  --bg-hover:       #311c5e;
+  --border-dim:     #29174d;
+  --border-def:     #3b216e;
+  --border-strong:  #5932a6;
+  --accent:         #c084fc;
+  --accent-dim:     rgba(192, 132, 252, 0.12);
+  --accent-glow:    rgba(192, 132, 252, 0.25);
+  --text-primary:   #f3e8ff;
+  --text-secondary: #e9d5ff;
+  --text-muted:     #a855f760;
+  --status-dev:     #60a5fa;
+  --status-test:    #fbbf24;
+  --status-prod:    #34d399;
+  --status-hold:    #71717a;
+  --status-bug:     #fb7185;
+}
+
+/* ─── Base Reset & High-Fidelity Typography ──────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ─── Monospace Font Stack ───────────────────────────────────── */
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, Menlo, monospace;
+  letter-spacing: -0.02em;
+}
+
+.font-sans {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #55637a; }
+
+/* ─── Grid Texture ───────────────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-grid-fine {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ─── Panels ─────────────────────────────────────────────────── */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-dim);
+}
+
+.panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-def);
+}
+
+/* ─── Scanline effect ────────────────────────────────────────── */
+.scanline {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent-dim) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 9999;
+  animation: scan 10s linear infinite;
+}
+
+@keyframes scan {
+  0%   { top: 0; }
+  100% { top: 100vh; }
+}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.cmd-table th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-dim);
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+}
+
+.cmd-table th:hover { color: var(--text-secondary); }
+
+.cmd-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border-dim);
+  vertical-align: middle;
+}
+
+.cmd-table tr:hover td {
+  background: var(--bg-hover);
+}
+
+.cmd-table tr:last-child td { border-bottom: none; }
+
+/* ─── Input / Form ───────────────────────────────────────────── */
+.cmd-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border-def);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.cmd-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.cmd-input::placeholder { color: var(--text-muted); }
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s, box-shadow 0.15s;
+}
+.btn-primary:hover {
+  opacity: 0.92;
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-def);
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.btn-ghost:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
