@@ -230,6 +230,15 @@ html, body, #root {
   color: #0f172a !important;
 }
 
+[data-theme="light-pro"] aside a:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light-pro"] aside a:hover span {
+  color: #0f172a !important;
+}
+
 [data-theme="light-pro"] .bg-\[\#151a24\],
 [data-theme="light-pro"] .bg-\[\#151c28\],
 [data-theme="light-pro"] .bg-\[\#161b24\],

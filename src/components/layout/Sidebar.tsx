@@ -41,11 +41,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onCloseMobile,
 }) => {
   const location = useLocation();
-  const { projects, tasks, bugs, teamMembers, visitors } = useDevHub();
+  const { projects, tasks, bugs, teamMembers, visitors, theme } = useDevHub();
+  const isLight = theme === 'light-pro';
 
-  const openBugsCount = bugs.filter(b => b.status === 'Open' || b.status === 'In Progress').length;
-  const openTasksCount = tasks.filter(t => t.status !== 'Done').length;
-  const activeVisitorsCount = visitors.filter(v => v.status === 'Active').length;
+  const openBugsCount = bugs.filter((b) => b.status === 'Open' || b.status === 'In Progress').length;
+  const openTasksCount = tasks.filter((t) => t.status !== 'Done').length;
+  const activeVisitorsCount = visitors.filter((v) => v.status === 'Active').length;
 
   const navItems: NavItemConfig[] = [
     { label: 'Dashboard',   path: '/dashboard',   icon: LayoutDashboard, iconColor: '#00d4c8' },
@@ -73,19 +74,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Main Sidebar Rail */}
       <aside
         className={clsx(
-          'fixed lg:static top-0 bottom-0 left-0 z-50 flex flex-col bg-[#0a0c10] border-r border-[#1a1f2c] transition-all duration-200 ease-in-out select-none',
+          'fixed lg:static top-0 bottom-0 left-0 z-50 flex flex-col transition-all duration-200 ease-in-out select-none border-r',
           collapsed ? 'w-[64px]' : 'w-[235px]',
-          mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
+          isLight
+            ? 'bg-[#ffffff] border-[#e2e8f0]'
+            : 'bg-[#0a0c10] border-[#1a1f2c]'
         )}
       >
         {/* Top Header / Branding */}
-        <div className="h-14 flex items-center justify-between px-3.5 border-b border-[#1a1f2c] bg-[#0c0e14]">
+        <div
+          className={`h-14 flex items-center justify-between px-3.5 border-b ${
+            isLight ? 'bg-[#f8fafc] border-[#e2e8f0]' : 'bg-[#0c0e14] border-[#1a1f2c]'
+          }`}
+        >
           <DevHubLogo size={collapsed ? 'sm' : 'md'} collapsed={collapsed} />
 
           <button
             type="button"
             onClick={onToggle}
-            className="hidden lg:flex items-center justify-center w-6 h-6 rounded-[2px] text-[#55637a] hover:text-[#00d4c8] hover:bg-[#141824] border border-transparent hover:border-[#1e2535] transition-colors"
+            className={`hidden lg:flex items-center justify-center w-6 h-6 rounded-[2px] border transition-colors ${
+              isLight
+                ? 'text-[#64748b] hover:text-[#0284c7] hover:bg-[#e2e8f0] border-transparent hover:border-[#cbd5e1]'
+                : 'text-[#55637a] hover:text-[#00d4c8] hover:bg-[#141824] border-transparent hover:border-[#1e2535]'
+            }`}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
@@ -94,16 +106,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Console Mode Tag */}
         {!collapsed && (
-          <div className="px-3 py-2 bg-[#0d1017] border-b border-[#161a24] flex items-center justify-between font-mono text-[9px]">
-            <span className="text-[#55637a] tracking-widest uppercase font-semibold">SYS: DEV_CENTER</span>
-            <span className="text-[#00d4c8] flex items-center gap-1 font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00d4c8] animate-pulse" />
+          <div
+            className={`px-3 py-2 border-b flex items-center justify-between font-mono text-[9px] ${
+              isLight ? 'bg-[#f8fafc] border-[#e2e8f0]' : 'bg-[#0d1017] border-[#161a24]'
+            }`}
+          >
+            <span
+              className={`tracking-widest uppercase font-semibold ${
+                isLight ? 'text-[#64748b]' : 'text-[#55637a]'
+              }`}
+            >
+              SYS: DEV_CENTER
+            </span>
+            <span
+              className={`flex items-center gap-1 font-bold ${
+                isLight ? 'text-[#059669]' : 'text-[#00d4c8]'
+              }`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+                  isLight ? 'bg-[#059669]' : 'bg-[#00d4c8]'
+                }`}
+              />
               ONLINE
             </span>
           </div>
         )}
 
-        {/* Navigation List with Colored Icons */}
+        {/* Navigation List with High-Contrast Hover States */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden py-3 px-2 space-y-1.5">
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -117,10 +147,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 to={item.path}
                 onClick={onCloseMobile}
                 className={clsx(
-                  'flex items-center gap-2.5 px-2 py-1.5 rounded-[2px] text-xs font-mono transition-all group relative',
+                  'flex items-center gap-2.5 px-2 py-1.5 rounded-[2px] text-xs font-mono transition-all group relative border-l-2',
                   isActive
-                    ? 'bg-[#151c28] text-[#e2e8f0] border-l-2 border-[#00d4c8] pl-[7px] font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
-                    : 'text-[#8892a4] hover:text-[#f1f5f9] hover:bg-[#121622] border-l-2 border-transparent'
+                    ? isLight
+                      ? 'bg-[#e0f2fe] text-[#0284c7] border-[#0284c7] pl-[7px] font-bold shadow-sm'
+                      : 'bg-[#151c28] text-[#e2e8f0] border-[#00d4c8] pl-[7px] font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
+                    : isLight
+                    ? 'text-[#334155] hover:text-[#0f172a] hover:bg-[#f1f5f9] border-transparent'
+                    : 'text-[#8892a4] hover:text-[#f1f5f9] hover:bg-[#121622] border-transparent'
                 )}
                 title={collapsed ? item.label : undefined}
               >
@@ -128,8 +162,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div
                   className="w-7 h-7 rounded-[2px] flex items-center justify-center flex-shrink-0 border transition-all"
                   style={{
-                    backgroundColor: `${item.iconColor}15`,
-                    borderColor: isActive ? `${item.iconColor}80` : `${item.iconColor}30`,
+                    backgroundColor: `${item.iconColor}18`,
+                    borderColor: isActive ? `${item.iconColor}90` : `${item.iconColor}35`,
                     boxShadow: isActive ? `0 0 10px ${item.iconColor}40` : `0 0 4px ${item.iconColor}15`,
                   }}
                 >
@@ -142,7 +176,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 {!collapsed && (
                   <div className="flex items-center justify-between flex-1 min-w-0">
-                    <span className="truncate tracking-wide">{item.label}</span>
+                    <span
+                      className={`truncate tracking-wide font-medium transition-colors ${
+                        isActive
+                          ? isLight
+                            ? 'text-[#0284c7] font-bold'
+                            : 'text-[#f1f5f9] font-bold'
+                          : isLight
+                          ? 'text-[#334155] group-hover:text-[#0f172a]'
+                          : 'text-[#8892a4] group-hover:text-[#ffffff]'
+                      }`}
+                    >
+                      {item.label}
+                    </span>
                     {item.badge && (
                       <span
                         className="font-mono text-[9.5px] px-1.5 py-0.2 rounded-[2px] font-bold border"
@@ -163,23 +209,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Bottom Rail Diagnostics */}
-        <div className="p-3 border-t border-[#1a1f2c] bg-[#0c0e14]">
+        <div
+          className={`p-3 border-t ${
+            isLight ? 'bg-[#f8fafc] border-[#e2e8f0]' : 'bg-[#0c0e14] border-[#1a1f2c]'
+          }`}
+        >
           {collapsed ? (
             <div className="flex justify-center" title="System Online">
               <span className="w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_#10b981]" />
             </div>
           ) : (
             <div className="space-y-1.5">
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#55637a]">
+              <div
+                className={`flex items-center justify-between font-mono text-[10px] ${
+                  isLight ? 'text-[#64748b]' : 'text-[#55637a]'
+                }`}
+              >
                 <span>CLUSTER</span>
-                <span className="text-[#00d4c8] font-semibold">PROD-LOCAL</span>
+                <span className={isLight ? 'text-[#0284c7] font-bold' : 'text-[#00d4c8] font-semibold'}>
+                  PROD-LOCAL
+                </span>
               </div>
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#55637a]">
+              <div
+                className={`flex items-center justify-between font-mono text-[10px] ${
+                  isLight ? 'text-[#64748b]' : 'text-[#55637a]'
+                }`}
+              >
                 <span>CATALOG</span>
-                <span className="text-[#38bdf8] font-bold">{projects.length} PROJECTS</span>
+                <span className={isLight ? 'text-[#0284c7] font-bold' : 'text-[#38bdf8] font-bold'}>
+                  {projects.length} PROJECTS
+                </span>
               </div>
-              <div className="pt-1 border-t border-[#161a24] flex items-center justify-between">
-                <span className="font-mono text-[9px] text-[#404d60]">LATENCY: 8ms</span>
+              <div
+                className={`pt-1 border-t flex items-center justify-between ${
+                  isLight ? 'border-[#e2e8f0]' : 'border-[#161a24]'
+                }`}
+              >
+                <span className={`font-mono text-[9px] ${isLight ? 'text-[#64748b]' : 'text-[#404d60]'}`}>
+                  LATENCY: 8ms
+                </span>
                 <span className="font-mono text-[9px] text-[#10b981] flex items-center gap-1 font-bold">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#10b981]" /> 100% OK
                 </span>
