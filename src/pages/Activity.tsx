@@ -34,17 +34,14 @@ export const Activity: React.FC = () => {
 
       {/* Filter Tabs */}
       <div className="flex items-center gap-1.5 p-2 bg-[#101318] border border-[#1e2330] rounded-[2px] overflow-x-auto">
-        <span className="font-mono text-[10px] text-[#55637a] uppercase mr-2 flex items-center gap-1">
-          <Filter size={10} /> FILTER STREAM:
-        </span>
         {types.map((tp) => (
           <button
             key={tp}
             onClick={() => setFilterType(tp)}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded-[2px] uppercase tracking-wider transition-colors ${
+            className={`font-mono text-[10px] px-2.5 py-1 rounded-[2px] uppercase tracking-wider transition-colors cursor-pointer select-none border ${
               filterType === tp
-                ? 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850] font-bold'
-                : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141824]'
+                ? 'bg-[#00d4c815] text-[#00d4c8] border-[#00d4c880] font-bold'
+                : 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9] dark:text-[#7a8899] dark:hover:text-[#f1f5f9] dark:hover:bg-[#141824] border-transparent'
             }`}
           >
             {tp}

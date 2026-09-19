@@ -67,7 +67,7 @@ export const Team: React.FC = () => {
               className={`px-2 py-1 text-[10px] uppercase rounded-[2px] border transition-colors ${
                 statusFilter === st
                   ? 'bg-[#00d4c815] border-[#00d4c850] text-[#00d4c8] font-bold'
-                  : 'bg-[#141820] border-[#252c3a] text-[#7a8899] hover:text-[#dce4f0]'
+                  : 'bg-[#f8fafc] dark:bg-[#141820] border-[#e2e8f0] dark:border-[#252c3a] text-[#64748b] dark:text-[#7a8899] hover:text-[#0f172a] hover:bg-[#f1f5f9] dark:hover:text-[#f1f5f9] dark:hover:bg-[#141824]'
               }`}
             >
               {st}

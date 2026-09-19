@@ -46,7 +46,7 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* ─── Monospace Font Stack ───────────────────────────────────── */
@@ -178,27 +178,26 @@ html, body, #root {
 }
 
 /* ============================================================= */
-/* ─── COMPREHENSIVE DYNAMIC THEME ENGINE (REAL-TIME ADAPTATION)  */
+/* ─── 1. LIGHT MODE (HIGH CONTRAST & REFINED HOVER ENGINE) ──── */
 /* ============================================================= */
-
-/* ─── 1. LIGHT MODE (Clean Precision Daylight) ──────────────── */
 [data-theme="light-pro"] {
-  --bg-base:        #f1f5f9;
+  --bg-base:        #f8fafc;
   --bg-surface:     #ffffff;
   --bg-panel:       #ffffff;
   --bg-card:        #ffffff;
-  --bg-hover:       #f8fafc;
+  --bg-hover:       #f1f5f9;
   --border-dim:     #e2e8f0;
   --border-def:     #cbd5e1;
   --border-strong:  #94a3b8;
   --accent:         #0284c7;
   --accent-dim:     rgba(2, 132, 199, 0.12);
-  --accent-glow:    rgba(2, 132, 199, 0.25);
+  --accent-glow:    rgba(2, 132, 199, 0.2);
   --text-primary:   #0f172a;
   --text-secondary: #334155;
   --text-muted:     #64748b;
 }
 
+/* Light Mode: Backgrounds */
 [data-theme="light-pro"] body,
 [data-theme="light-pro"] #root,
 [data-theme="light-pro"] main,
@@ -207,7 +206,7 @@ html, body, #root {
 [data-theme="light-pro"] .bg-\[\#0a0c10\],
 [data-theme="light-pro"] .bg-\[\#080a0d\],
 [data-theme="light-pro"] .bg-\[\#0d1017\] {
-  background-color: #f1f5f9 !important;
+  background-color: #f8fafc !important;
   color: #0f172a !important;
 }
 
@@ -230,15 +229,7 @@ html, body, #root {
   color: #0f172a !important;
 }
 
-[data-theme="light-pro"] aside a:hover {
-  background-color: #f1f5f9 !important;
-  color: #0f172a !important;
-}
-
-[data-theme="light-pro"] aside a:hover span {
-  color: #0f172a !important;
-}
-
+/* Light Mode: Card & Row Active/Hover Backgrounds */
 [data-theme="light-pro"] .bg-\[\#151a24\],
 [data-theme="light-pro"] .bg-\[\#151c28\],
 [data-theme="light-pro"] .bg-\[\#161b24\],
@@ -248,9 +239,10 @@ html, body, #root {
 [data-theme="light-pro"] .bg-\[\#1b2233\],
 [data-theme="light-pro"] .bg-\[\#151a28\],
 [data-theme="light-pro"] .bg-\[\#121722\] {
-  background-color: #f8fafc !important;
+  background-color: #f1f5f9 !important;
 }
 
+/* Light Mode: Borders */
 [data-theme="light-pro"] .border-\[\#1e2330\],
 [data-theme="light-pro"] .border-\[\#1a1f2c\],
 [data-theme="light-pro"] .border-\[\#181d28\],
@@ -264,10 +256,12 @@ html, body, #root {
 [data-theme="light-pro"] .border-\[\#2a3040\],
 [data-theme="light-pro"] .divide-\[\#161b24\] > * + *,
 [data-theme="light-pro"] .divide-\[\#1a2130\] > * + *,
-[data-theme="light-pro"] .divide-\[\#182030\] > * + * {
+[data-theme="light-pro"] .divide-\[\#182030\] > * + *,
+[data-theme="light-pro"] .divide-\[\#1e2330\] > * + * {
   border-color: #e2e8f0 !important;
 }
 
+/* Light Mode: Text Colors */
 [data-theme="light-pro"] .text-\[\#dce4f0\],
 [data-theme="light-pro"] .text-\[\#e2e8f0\],
 [data-theme="light-pro"] .text-\[\#f1f5f9\],
@@ -289,243 +283,167 @@ html, body, #root {
   color: #64748b !important;
 }
 
+/* ─── Light Mode: Tab Headings & Interactive Hover Overrides ─── */
+[data-theme="light-pro"] button:hover:not(:disabled),
+[data-theme="light-pro"] a:hover,
+[data-theme="light-pro"] .hover\:text-\[\#dce4f0\]:hover,
+[data-theme="light-pro"] .hover\:text-\[\#f1f5f9\]:hover,
+[data-theme="light-pro"] .hover\:text-\[\#e2e8f0\]:hover,
+[data-theme="light-pro"] .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+
+[data-theme="light-pro"] .hover\:bg-\[\#121622\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#141824\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#151a24\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#1a2130\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#182030\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#151a28\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#1f2535\]:hover,
+[data-theme="light-pro"] .hover\:bg-\[\#182232\]:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode: Selected Tabs */
+[data-theme="light-pro"] .border-b-2.border-\[\#00d4c8\],
+[data-theme="light-pro"] .border-b-2[class*="text-\[\#00d4c8\]"] {
+  border-bottom-color: #0284c7 !important;
+  color: #0284c7 !important;
+  background-color: #f0f9ff !important;
+}
+
+/* Light Mode: Alert & Attention Cards */
+[data-theme="light-pro"] .bg-\[\#1a1418\],
+[data-theme="light-pro"] .hover\:bg-\[\#25181e\]:hover {
+  background-color: #fef2f2 !important;
+  border-color: #fecaca !important;
+}
+[data-theme="light-pro"] .bg-\[\#1c1812\],
+[data-theme="light-pro"] .hover\:bg-\[\#272118\]:hover {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+[data-theme="light-pro"] .bg-\[\#141822\],
+[data-theme="light-pro"] .hover\:bg-\[\#1b2230\]:hover {
+  background-color: #eff6ff !important;
+  border-color: #bfdbfe !important;
+}
+
+/* Light Mode: Form Inputs */
 [data-theme="light-pro"] input,
 [data-theme="light-pro"] select,
 [data-theme="light-pro"] textarea {
-  background-color: #f8fafc !important;
+  background-color: #ffffff !important;
   color: #0f172a !important;
   border-color: #cbd5e1 !important;
 }
-
-/* ─── 2. MATRIX GREEN THEME ─────────────────────────────────── */
-[data-theme="matrix-green"] {
-  --bg-base:        #040805;
-  --bg-surface:     #08120a;
-  --bg-panel:       #0d1c10;
-  --bg-card:        #122617;
-  --bg-hover:       #17331f;
-  --border-dim:     #17301d;
-  --border-def:     #1e4027;
-  --border-strong:  #2d603a;
-  --accent:         #00ff66;
-  --accent-dim:     rgba(0, 255, 102, 0.12);
-  --accent-glow:    rgba(0, 255, 102, 0.25);
-  --text-primary:   #dcfce7;
-  --text-secondary: #86efac;
-  --text-muted:     #22c55e80;
+[data-theme="light-pro"] input:focus,
+[data-theme="light-pro"] select:focus,
+[data-theme="light-pro"] textarea:focus {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15) !important;
 }
 
-[data-theme="matrix-green"] body,
-[data-theme="matrix-green"] #root,
-[data-theme="matrix-green"] main,
-[data-theme="matrix-green"] .bg-\[\#0a0c0f\],
-[data-theme="matrix-green"] .bg-\[\#07090d\],
-[data-theme="matrix-green"] .bg-\[\#0a0c10\],
-[data-theme="matrix-green"] .bg-\[\#080a0d\] {
+/* Light Mode: Table Row Hover */
+[data-theme="light-pro"] .cmd-table tr:hover td {
+  background-color: #f8fafc !important;
+}
+
+/* Light Mode: Refined Shadows (No harsh dark cyan neon blobs in light mode) */
+[data-theme="light-pro"] [class*="shadow-\[0_0_10px"],
+[data-theme="light-pro"] [class*="shadow-\[0_0_12px"],
+[data-theme="light-pro"] [class*="shadow-\[0_0_8px"] {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light Mode: Primary Accent Buttons */
+[data-theme="light-pro"] .bg-\[\#00d4c8\] {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+[data-theme="light-pro"] .bg-\[\#00d4c8\]:hover {
+  background-color: #0369a1 !important;
+}
+[data-theme="light-pro"] .text-\[\#00d4c8\] {
+  color: #0284c7 !important;
+}
+[data-theme="light-pro"] .border-\[\#00d4c8\] {
+  border-color: #0284c7 !important;
+}
+
+/* ============================================================= */
+/* ─── 2. DARK THEMES COLOR REMAPPING ────────────────────────── */
+/* ============================================================= */
+
+/* ─── Matrix Green ─────────────────────────────────────────── */
+[data-theme="matrix-green"] {
+  --bg-base: #040805; --bg-surface: #08120a; --bg-panel: #0d1c10; --bg-card: #122617;
+  --bg-hover: #17331f; --border-dim: #17301d; --border-def: #1e4027; --border-strong: #2d603a;
+  --accent: #00ff66; --accent-dim: rgba(0, 255, 102, 0.12); --accent-glow: rgba(0, 255, 102, 0.25);
+  --text-primary: #dcfce7; --text-secondary: #86efac; --text-muted: #22c55e80;
+}
+[data-theme="matrix-green"] body, [data-theme="matrix-green"] #root, [data-theme="matrix-green"] main {
   background-color: #040805 !important;
 }
-
-[data-theme="matrix-green"] aside,
-[data-theme="matrix-green"] header,
-[data-theme="matrix-green"] .bg-\[\#101318\],
-[data-theme="matrix-green"] .bg-\[\#0c0e14\],
-[data-theme="matrix-green"] .bg-\[\#141820\],
-[data-theme="matrix-green"] .bg-\[\#10141c\],
-[data-theme="matrix-green"] .bg-\[\#10141e\],
-[data-theme="matrix-green"] .bg-\[\#121622\],
-[data-theme="matrix-green"] .bg-\[\#0b0e14\],
-[data-theme="matrix-green"] .bg-\[\#0d1017\] {
+[data-theme="matrix-green"] aside, [data-theme="matrix-green"] header,
+[data-theme="matrix-green"] .bg-\[\#101318\], [data-theme="matrix-green"] .bg-\[\#0c0e14\],
+[data-theme="matrix-green"] .bg-\[\#141820\], [data-theme="matrix-green"] .bg-\[\#10141c\] {
   background-color: #09140c !important;
 }
+[data-theme="matrix-green"] .text-\[\#00d4c8\] { color: #00ff66 !important; }
+[data-theme="matrix-green"] .bg-\[\#00d4c8\] { background-color: #00ff66 !important; }
 
-[data-theme="matrix-green"] .border-\[\#1e2330\],
-[data-theme="matrix-green"] .border-\[\#1a1f2c\],
-[data-theme="matrix-green"] .border-\[\#181d28\],
-[data-theme="matrix-green"] .border-\[\#161a24\],
-[data-theme="matrix-green"] .border-\[\#1f2638\],
-[data-theme="matrix-green"] .border-\[\#252c3a\],
-[data-theme="matrix-green"] .border-\[\#252f44\] {
-  border-color: #1a3320 !important;
-}
-
-[data-theme="matrix-green"] .text-\[\#00d4c8\],
-[data-theme="matrix-green"] .bg-\[\#00d4c8\] {
-  color: #00ff66 !important;
-}
-[data-theme="matrix-green"] .bg-\[\#00d4c8\] {
-  background-color: #00ff66 !important;
-}
-
-/* ─── 3. SOLAR AMBER THEME ──────────────────────────────────── */
+/* ─── Solar Amber ──────────────────────────────────────────── */
 [data-theme="solar-amber"] {
-  --bg-base:        #0a0805;
-  --bg-surface:     #14100a;
-  --bg-panel:       #1c160e;
-  --bg-card:        #261e14;
-  --bg-hover:       #33281a;
-  --border-dim:     #2b2114;
-  --border-def:     #3d2e1c;
-  --border-strong:  #5c452a;
-  --accent:         #f59e0b;
-  --accent-dim:     rgba(245, 158, 11, 0.12);
-  --accent-glow:    rgba(245, 158, 11, 0.25);
-  --text-primary:   #fef3c7;
-  --text-secondary: #fde68a;
-  --text-muted:     #b4530980;
+  --bg-base: #0a0805; --bg-surface: #14100a; --bg-panel: #1c160e; --bg-card: #261e14;
+  --bg-hover: #33281a; --border-dim: #2b2114; --border-def: #3d2e1c; --border-strong: #5c452a;
+  --accent: #f59e0b; --accent-dim: rgba(245, 158, 11, 0.12); --accent-glow: rgba(245, 158, 11, 0.25);
+  --text-primary: #fef3c7; --text-secondary: #fde68a; --text-muted: #b4530980;
 }
-
-[data-theme="solar-amber"] body,
-[data-theme="solar-amber"] #root,
-[data-theme="solar-amber"] main,
-[data-theme="solar-amber"] .bg-\[\#0a0c0f\],
-[data-theme="solar-amber"] .bg-\[\#07090d\],
-[data-theme="solar-amber"] .bg-\[\#0a0c10\],
-[data-theme="solar-amber"] .bg-\[\#080a0d\] {
+[data-theme="solar-amber"] body, [data-theme="solar-amber"] #root, [data-theme="solar-amber"] main {
   background-color: #0a0805 !important;
 }
-
-[data-theme="solar-amber"] aside,
-[data-theme="solar-amber"] header,
-[data-theme="solar-amber"] .bg-\[\#101318\],
-[data-theme="solar-amber"] .bg-\[\#0c0e14\],
-[data-theme="solar-amber"] .bg-\[\#141820\],
-[data-theme="solar-amber"] .bg-\[\#10141c\],
-[data-theme="solar-amber"] .bg-\[\#10141e\],
-[data-theme="solar-amber"] .bg-\[\#121622\],
-[data-theme="solar-amber"] .bg-\[\#0b0e14\],
-[data-theme="solar-amber"] .bg-\[\#0d1017\] {
+[data-theme="solar-amber"] aside, [data-theme="solar-amber"] header,
+[data-theme="solar-amber"] .bg-\[\#101318\], [data-theme="solar-amber"] .bg-\[\#0c0e14\],
+[data-theme="solar-amber"] .bg-\[\#141820\], [data-theme="solar-amber"] .bg-\[\#10141c\] {
   background-color: #151009 !important;
 }
+[data-theme="solar-amber"] .text-\[\#00d4c8\] { color: #f59e0b !important; }
+[data-theme="solar-amber"] .bg-\[\#00d4c8\] { background-color: #f59e0b !important; }
 
-[data-theme="solar-amber"] .border-\[\#1e2330\],
-[data-theme="solar-amber"] .border-\[\#1a1f2c\],
-[data-theme="solar-amber"] .border-\[\#181d28\],
-[data-theme="solar-amber"] .border-\[\#161a24\],
-[data-theme="solar-amber"] .border-\[\#1f2638\],
-[data-theme="solar-amber"] .border-\[\#252c3a\],
-[data-theme="solar-amber"] .border-\[\#252f44\] {
-  border-color: #382818 !important;
-}
-
-[data-theme="solar-amber"] .text-\[\#00d4c8\] {
-  color: #f59e0b !important;
-}
-[data-theme="solar-amber"] .bg-\[\#00d4c8\] {
-  background-color: #f59e0b !important;
-}
-
-/* ─── 4. ELECTRIC COBALT THEME ──────────────────────────────── */
+/* ─── Electric Cobalt ──────────────────────────────────────── */
 [data-theme="electric-cobalt"] {
-  --bg-base:        #060a14;
-  --bg-surface:     #0b1222;
-  --bg-panel:       #101b33;
-  --bg-card:        #152445;
-  --bg-hover:       #1c305c;
-  --border-dim:     #18284d;
-  --border-def:     #223a6e;
-  --border-strong:  #3458a6;
-  --accent:         #38bdf8;
-  --accent-dim:     rgba(56, 189, 248, 0.12);
-  --accent-glow:    rgba(56, 189, 248, 0.25);
-  --text-primary:   #e0f2fe;
-  --text-secondary: #bae6fd;
-  --text-muted:     #38bdf860;
+  --bg-base: #060a14; --bg-surface: #0b1222; --bg-panel: #101b33; --bg-card: #152445;
+  --bg-hover: #1c305c; --border-dim: #18284d; --border-def: #223a6e; --border-strong: #3458a6;
+  --accent: #38bdf8; --accent-dim: rgba(56, 189, 248, 0.12); --accent-glow: rgba(56, 189, 248, 0.25);
+  --text-primary: #e0f2fe; --text-secondary: #bae6fd; --text-muted: #38bdf860;
 }
-
-[data-theme="electric-cobalt"] body,
-[data-theme="electric-cobalt"] #root,
-[data-theme="electric-cobalt"] main,
-[data-theme="electric-cobalt"] .bg-\[\#0a0c0f\],
-[data-theme="electric-cobalt"] .bg-\[\#07090d\],
-[data-theme="electric-cobalt"] .bg-\[\#0a0c10\],
-[data-theme="electric-cobalt"] .bg-\[\#080a0d\] {
+[data-theme="electric-cobalt"] body, [data-theme="electric-cobalt"] #root, [data-theme="electric-cobalt"] main {
   background-color: #060a14 !important;
 }
-
-[data-theme="electric-cobalt"] aside,
-[data-theme="electric-cobalt"] header,
-[data-theme="electric-cobalt"] .bg-\[\#101318\],
-[data-theme="electric-cobalt"] .bg-\[\#0c0e14\],
-[data-theme="electric-cobalt"] .bg-\[\#141820\],
-[data-theme="electric-cobalt"] .bg-\[\#10141c\],
-[data-theme="electric-cobalt"] .bg-\[\#10141e\],
-[data-theme="electric-cobalt"] .bg-\[\#121622\],
-[data-theme="electric-cobalt"] .bg-\[\#0b0e14\],
-[data-theme="electric-cobalt"] .bg-\[\#0d1017\] {
+[data-theme="electric-cobalt"] aside, [data-theme="electric-cobalt"] header,
+[data-theme="electric-cobalt"] .bg-\[\#101318\], [data-theme="electric-cobalt"] .bg-\[\#0c0e14\],
+[data-theme="electric-cobalt"] .bg-\[\#141820\], [data-theme="electric-cobalt"] .bg-\[\#10141c\] {
   background-color: #0b1426 !important;
 }
+[data-theme="electric-cobalt"] .text-\[\#00d4c8\] { color: #38bdf8 !important; }
+[data-theme="electric-cobalt"] .bg-\[\#00d4c8\] { background-color: #38bdf8 !important; }
 
-[data-theme="electric-cobalt"] .border-\[\#1e2330\],
-[data-theme="electric-cobalt"] .border-\[\#1a1f2c\],
-[data-theme="electric-cobalt"] .border-\[\#181d28\],
-[data-theme="electric-cobalt"] .border-\[\#161a24\],
-[data-theme="electric-cobalt"] .border-\[\#1f2638\],
-[data-theme="electric-cobalt"] .border-\[\#252c3a\],
-[data-theme="electric-cobalt"] .border-\[\#252f44\] {
-  border-color: #1b2f56 !important;
-}
-
-[data-theme="electric-cobalt"] .text-\[\#00d4c8\] {
-  color: #38bdf8 !important;
-}
-[data-theme="electric-cobalt"] .bg-\[\#00d4c8\] {
-  background-color: #38bdf8 !important;
-}
-
-/* ─── 5. SYNTHWAVE PURPLE THEME ─────────────────────────────── */
+/* ─── Synthwave Purple ─────────────────────────────────────── */
 [data-theme="synthwave-purple"] {
-  --bg-base:        #0a0614;
-  --bg-surface:     #120a22;
-  --bg-panel:       #1a0f33;
-  --bg-card:        #241545;
-  --bg-hover:       #311c5e;
-  --border-dim:     #29174d;
-  --border-def:     #3b216e;
-  --border-strong:  #5932a6;
-  --accent:         #c084fc;
-  --accent-dim:     rgba(192, 132, 252, 0.12);
-  --accent-glow:    rgba(192, 132, 252, 0.25);
-  --text-primary:   #f3e8ff;
-  --text-secondary: #e9d5ff;
-  --text-muted:     #a855f760;
+  --bg-base: #0a0614; --bg-surface: #120a22; --bg-panel: #1a0f33; --bg-card: #241545;
+  --bg-hover: #311c5e; --border-dim: #29174d; --border-def: #3b216e; --border-strong: #5932a6;
+  --accent: #c084fc; --accent-dim: rgba(192, 132, 252, 0.12); --accent-glow: rgba(192, 132, 252, 0.25);
+  --text-primary: #f3e8ff; --text-secondary: #e9d5ff; --text-muted: #a855f760;
 }
-
-[data-theme="synthwave-purple"] body,
-[data-theme="synthwave-purple"] #root,
-[data-theme="synthwave-purple"] main,
-[data-theme="synthwave-purple"] .bg-\[\#0a0c0f\],
-[data-theme="synthwave-purple"] .bg-\[\#07090d\],
-[data-theme="synthwave-purple"] .bg-\[\#0a0c10\],
-[data-theme="synthwave-purple"] .bg-\[\#080a0d\] {
+[data-theme="synthwave-purple"] body, [data-theme="synthwave-purple"] #root, [data-theme="synthwave-purple"] main {
   background-color: #0a0614 !important;
 }
-
-[data-theme="synthwave-purple"] aside,
-[data-theme="synthwave-purple"] header,
-[data-theme="synthwave-purple"] .bg-\[\#101318\],
-[data-theme="synthwave-purple"] .bg-\[\#0c0e14\],
-[data-theme="synthwave-purple"] .bg-\[\#141820\],
-[data-theme="synthwave-purple"] .bg-\[\#10141c\],
-[data-theme="synthwave-purple"] .bg-\[\#10141e\],
-[data-theme="synthwave-purple"] .bg-\[\#121622\],
-[data-theme="synthwave-purple"] .bg-\[\#0b0e14\],
-[data-theme="synthwave-purple"] .bg-\[\#0d1017\] {
+[data-theme="synthwave-purple"] aside, [data-theme="synthwave-purple"] header,
+[data-theme="synthwave-purple"] .bg-\[\#101318\], [data-theme="synthwave-purple"] .bg-\[\#0c0e14\],
+[data-theme="synthwave-purple"] .bg-\[\#141820\], [data-theme="synthwave-purple"] .bg-\[\#10141c\] {
   background-color: #140b28 !important;
 }
-
-[data-theme="synthwave-purple"] .border-\[\#1e2330\],
-[data-theme="synthwave-purple"] .border-\[\#1a1f2c\],
-[data-theme="synthwave-purple"] .border-\[\#181d28\],
-[data-theme="synthwave-purple"] .border-\[\#161a24\],
-[data-theme="synthwave-purple"] .border-\[\#1f2638\],
-[data-theme="synthwave-purple"] .border-\[\#252c3a\],
-[data-theme="synthwave-purple"] .border-\[\#252f44\] {
-  border-color: #33175c !important;
-}
-
-[data-theme="synthwave-purple"] .text-\[\#00d4c8\] {
-  color: #c084fc !important;
-}
-[data-theme="synthwave-purple"] .bg-\[\#00d4c8\] {
-  background-color: #c084fc !important;
-}
+[data-theme="synthwave-purple"] .text-\[\#00d4c8\] { color: #c084fc !important; }
+[data-theme="synthwave-purple"] .bg-\[\#00d4c8\] { background-color: #c084fc !important; }

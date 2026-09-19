@@ -347,10 +347,10 @@ export const ProjectDetail: React.FC = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`font-mono text-xs uppercase tracking-wider px-3.5 py-2.5 transition-all border-b-2 whitespace-nowrap ${
+              className={`font-mono text-xs uppercase tracking-wider px-3.5 py-2.5 transition-all border-b-2 whitespace-nowrap cursor-pointer select-none ${
                 isSelected
-                  ? 'border-[#00d4c8] text-[#00d4c8] font-bold bg-[#00d4c808]'
-                  : 'border-transparent text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#121622]'
+                  ? 'border-[#00d4c8] text-[#00d4c8] font-bold bg-[#00d4c810]'
+                  : 'border-transparent text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9] dark:text-[#7a8899] dark:hover:text-[#f1f5f9] dark:hover:bg-[#141824]'
               }`}
             >
               {tab}

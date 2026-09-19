@@ -165,10 +165,10 @@ export const Dashboard: React.FC = () => {
               <button
                 key={st}
                 onClick={() => setSelectedStatus(st)}
-                className={`font-mono text-[10.5px] px-2.5 py-1 rounded-[2px] uppercase tracking-wider transition-all whitespace-nowrap ${
+                className={`font-mono text-[10.5px] px-2.5 py-1 rounded-[2px] uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer select-none border ${
                   selectedStatus === st
-                    ? 'bg-[#182030] text-[#00d4c8] border border-[#00d4c850] font-bold shadow-[0_0_8px_rgba(0,212,200,0.15)]'
-                    : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141824] border border-transparent'
+                    ? 'bg-[#00d4c815] text-[#00d4c8] border-[#00d4c880] font-bold shadow-sm'
+                    : 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9] dark:text-[#7a8899] dark:hover:text-[#f1f5f9] dark:hover:bg-[#141824] border-transparent'
                 }`}
               >
                 {st}
