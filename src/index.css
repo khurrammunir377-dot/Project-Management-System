@@ -27,121 +27,6 @@
   --status-bug:     #ef4444;
 }
 
-/* ─── Theme 2: Matrix / Terminal Green ───────────────────────── */
-[data-theme="matrix-green"] {
-  --bg-base:        #040805;
-  --bg-surface:     #08120a;
-  --bg-panel:       #0d1c10;
-  --bg-card:        #122617;
-  --bg-hover:       #17331f;
-  --border-dim:     #17301d;
-  --border-def:     #1e4027;
-  --border-strong:  #2d603a;
-  --accent:         #00ff66;
-  --accent-dim:     rgba(0, 255, 102, 0.12);
-  --accent-glow:    rgba(0, 255, 102, 0.25);
-  --text-primary:   #dcfce7;
-  --text-secondary: #86efac;
-  --text-muted:     #22c55e60;
-  --status-dev:     #38bdf8;
-  --status-test:    #eab308;
-  --status-prod:    #00ff66;
-  --status-hold:    #6b7280;
-  --status-bug:     #f87171;
-}
-
-/* ─── Theme 3: Solar Amber / Tactical ────────────────────────── */
-[data-theme="solar-amber"] {
-  --bg-base:        #0a0805;
-  --bg-surface:     #14100a;
-  --bg-panel:       #1c160e;
-  --bg-card:        #261e14;
-  --bg-hover:       #33281a;
-  --border-dim:     #2b2114;
-  --border-def:     #3d2e1c;
-  --border-strong:  #5c452a;
-  --accent:         #f59e0b;
-  --accent-dim:     rgba(245, 158, 11, 0.12);
-  --accent-glow:    rgba(245, 158, 11, 0.25);
-  --text-primary:   #fef3c7;
-  --text-secondary: #fde68a;
-  --text-muted:     #b4530980;
-  --status-dev:     #60a5fa;
-  --status-test:    #f59e0b;
-  --status-prod:    #34d399;
-  --status-hold:    #78716c;
-  --status-bug:     #ef4444;
-}
-
-/* ─── Theme 4: Electric Cobalt / Deep Blue ───────────────────── */
-[data-theme="electric-cobalt"] {
-  --bg-base:        #060a14;
-  --bg-surface:     #0b1222;
-  --bg-panel:       #101b33;
-  --bg-card:        #152445;
-  --bg-hover:       #1c305c;
-  --border-dim:     #18284d;
-  --border-def:     #223a6e;
-  --border-strong:  #3458a6;
-  --accent:         #38bdf8;
-  --accent-dim:     rgba(56, 189, 248, 0.12);
-  --accent-glow:    rgba(56, 189, 248, 0.25);
-  --text-primary:   #e0f2fe;
-  --text-secondary: #bae6fd;
-  --text-muted:     #38bdf860;
-  --status-dev:     #38bdf8;
-  --status-test:    #fbbf24;
-  --status-prod:    #10b981;
-  --status-hold:    #64748b;
-  --status-bug:     #f43f5e;
-}
-
-/* ─── Theme 5: Synthwave / Neon Violet ───────────────────────── */
-[data-theme="synthwave-purple"] {
-  --bg-base:        #0a0614;
-  --bg-surface:     #120a22;
-  --bg-panel:       #1a0f33;
-  --bg-card:        #241545;
-  --bg-hover:       #311c5e;
-  --border-dim:     #29174d;
-  --border-def:     #3b216e;
-  --border-strong:  #5932a6;
-  --accent:         #c084fc;
-  --accent-dim:     rgba(192, 132, 252, 0.12);
-  --accent-glow:    rgba(192, 132, 252, 0.25);
-  --text-primary:   #f3e8ff;
-  --text-secondary: #e9d5ff;
-  --text-muted:     #a855f760;
-  --status-dev:     #60a5fa;
-  --status-test:    #fbbf24;
-  --status-prod:    #34d399;
-  --status-hold:    #71717a;
-  --status-bug:     #fb7185;
-}
-
-/* ─── Theme 6: Light Mode / High-Contrast Precision ────────── */
-[data-theme="light-pro"] {
-  --bg-base:        #f8fafc;
-  --bg-surface:     #ffffff;
-  --bg-panel:       #f1f5f9;
-  --bg-card:        #ffffff;
-  --bg-hover:       #e2e8f0;
-  --border-dim:     #e2e8f0;
-  --border-def:     #cbd5e1;
-  --border-strong:  #94a3b8;
-  --accent:         #0284c7;
-  --accent-dim:     rgba(2, 132, 199, 0.12);
-  --accent-glow:    rgba(2, 132, 199, 0.25);
-  --text-primary:   #0f172a;
-  --text-secondary: #475569;
-  --text-muted:     #64748b;
-  --status-dev:     #2563eb;
-  --status-test:    #d97706;
-  --status-prod:    #059669;
-  --status-hold:    #475569;
-  --status-bug:     #dc2626;
-}
-
 /* ─── Base Reset & High-Fidelity Typography ──────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -161,6 +46,7 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ─── Monospace Font Stack ───────────────────────────────────── */
@@ -197,17 +83,6 @@ html, body, #root {
 .bg-dots {
   background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size: 24px 24px;
-}
-
-/* ─── Panels ─────────────────────────────────────────────────── */
-.panel {
-  background: var(--bg-panel);
-  border: 1px solid var(--border-dim);
-}
-
-.panel-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-def);
 }
 
 /* ─── Scanline effect ────────────────────────────────────────── */
@@ -300,4 +175,348 @@ html, body, #root {
   border-color: var(--border-strong);
   color: var(--text-primary);
   background: var(--bg-hover);
+}
+
+/* ============================================================= */
+/* ─── COMPREHENSIVE DYNAMIC THEME ENGINE (REAL-TIME ADAPTATION)  */
+/* ============================================================= */
+
+/* ─── 1. LIGHT MODE (Clean Precision Daylight) ──────────────── */
+[data-theme="light-pro"] {
+  --bg-base:        #f1f5f9;
+  --bg-surface:     #ffffff;
+  --bg-panel:       #ffffff;
+  --bg-card:        #ffffff;
+  --bg-hover:       #f8fafc;
+  --border-dim:     #e2e8f0;
+  --border-def:     #cbd5e1;
+  --border-strong:  #94a3b8;
+  --accent:         #0284c7;
+  --accent-dim:     rgba(2, 132, 199, 0.12);
+  --accent-glow:    rgba(2, 132, 199, 0.25);
+  --text-primary:   #0f172a;
+  --text-secondary: #334155;
+  --text-muted:     #64748b;
+}
+
+[data-theme="light-pro"] body,
+[data-theme="light-pro"] #root,
+[data-theme="light-pro"] main,
+[data-theme="light-pro"] .bg-\[\#0a0c0f\],
+[data-theme="light-pro"] .bg-\[\#07090d\],
+[data-theme="light-pro"] .bg-\[\#0a0c10\],
+[data-theme="light-pro"] .bg-\[\#080a0d\],
+[data-theme="light-pro"] .bg-\[\#0d1017\] {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light-pro"] aside,
+[data-theme="light-pro"] header,
+[data-theme="light-pro"] .bg-\[\#101318\],
+[data-theme="light-pro"] .bg-\[\#0c0e14\],
+[data-theme="light-pro"] .bg-\[\#141820\],
+[data-theme="light-pro"] .bg-\[\#10141c\],
+[data-theme="light-pro"] .bg-\[\#10141e\],
+[data-theme="light-pro"] .bg-\[\#121622\],
+[data-theme="light-pro"] .bg-\[\#0b0e14\],
+[data-theme="light-pro"] .bg-\[\#141824\],
+[data-theme="light-pro"] .bg-\[\#181d28\],
+[data-theme="light-pro"] .bg-\[\#1a1f29\],
+[data-theme="light-pro"] .bg-\[\#141d2d\],
+[data-theme="light-pro"] .bg-\[\#171c26\],
+[data-theme="light-pro"] .bg-\[\#161b26\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light-pro"] .bg-\[\#151a24\],
+[data-theme="light-pro"] .bg-\[\#151c28\],
+[data-theme="light-pro"] .bg-\[\#161b24\],
+[data-theme="light-pro"] .bg-\[\#1a2130\],
+[data-theme="light-pro"] .bg-\[\#182030\],
+[data-theme="light-pro"] .bg-\[\#182232\],
+[data-theme="light-pro"] .bg-\[\#1b2233\],
+[data-theme="light-pro"] .bg-\[\#151a28\],
+[data-theme="light-pro"] .bg-\[\#121722\] {
+  background-color: #f8fafc !important;
+}
+
+[data-theme="light-pro"] .border-\[\#1e2330\],
+[data-theme="light-pro"] .border-\[\#1a1f2c\],
+[data-theme="light-pro"] .border-\[\#181d28\],
+[data-theme="light-pro"] .border-\[\#161a24\],
+[data-theme="light-pro"] .border-\[\#1f2638\],
+[data-theme="light-pro"] .border-\[\#252c3a\],
+[data-theme="light-pro"] .border-\[\#252f44\],
+[data-theme="light-pro"] .border-\[\#1e2535\],
+[data-theme="light-pro"] .border-\[\#27324b\],
+[data-theme="light-pro"] .border-\[\#283347\],
+[data-theme="light-pro"] .border-\[\#2a3040\],
+[data-theme="light-pro"] .divide-\[\#161b24\] > * + *,
+[data-theme="light-pro"] .divide-\[\#1a2130\] > * + *,
+[data-theme="light-pro"] .divide-\[\#182030\] > * + * {
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light-pro"] .text-\[\#dce4f0\],
+[data-theme="light-pro"] .text-\[\#e2e8f0\],
+[data-theme="light-pro"] .text-\[\#f1f5f9\],
+[data-theme="light-pro"] .text-\[\#c5d1e0\] {
+  color: #0f172a !important;
+}
+
+[data-theme="light-pro"] .text-\[\#7a8899\],
+[data-theme="light-pro"] .text-\[\#8892a4\],
+[data-theme="light-pro"] .text-\[\#a0aec0\],
+[data-theme="light-pro"] .text-\[\#94a3b8\],
+[data-theme="light-pro"] .text-\[\#6b7b94\] {
+  color: #334155 !important;
+}
+
+[data-theme="light-pro"] .text-\[\#55637a\],
+[data-theme="light-pro"] .text-\[\#404d60\],
+[data-theme="light-pro"] .text-\[\#475569\] {
+  color: #64748b !important;
+}
+
+[data-theme="light-pro"] input,
+[data-theme="light-pro"] select,
+[data-theme="light-pro"] textarea {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* ─── 2. MATRIX GREEN THEME ─────────────────────────────────── */
+[data-theme="matrix-green"] {
+  --bg-base:        #040805;
+  --bg-surface:     #08120a;
+  --bg-panel:       #0d1c10;
+  --bg-card:        #122617;
+  --bg-hover:       #17331f;
+  --border-dim:     #17301d;
+  --border-def:     #1e4027;
+  --border-strong:  #2d603a;
+  --accent:         #00ff66;
+  --accent-dim:     rgba(0, 255, 102, 0.12);
+  --accent-glow:    rgba(0, 255, 102, 0.25);
+  --text-primary:   #dcfce7;
+  --text-secondary: #86efac;
+  --text-muted:     #22c55e80;
+}
+
+[data-theme="matrix-green"] body,
+[data-theme="matrix-green"] #root,
+[data-theme="matrix-green"] main,
+[data-theme="matrix-green"] .bg-\[\#0a0c0f\],
+[data-theme="matrix-green"] .bg-\[\#07090d\],
+[data-theme="matrix-green"] .bg-\[\#0a0c10\],
+[data-theme="matrix-green"] .bg-\[\#080a0d\] {
+  background-color: #040805 !important;
+}
+
+[data-theme="matrix-green"] aside,
+[data-theme="matrix-green"] header,
+[data-theme="matrix-green"] .bg-\[\#101318\],
+[data-theme="matrix-green"] .bg-\[\#0c0e14\],
+[data-theme="matrix-green"] .bg-\[\#141820\],
+[data-theme="matrix-green"] .bg-\[\#10141c\],
+[data-theme="matrix-green"] .bg-\[\#10141e\],
+[data-theme="matrix-green"] .bg-\[\#121622\],
+[data-theme="matrix-green"] .bg-\[\#0b0e14\],
+[data-theme="matrix-green"] .bg-\[\#0d1017\] {
+  background-color: #09140c !important;
+}
+
+[data-theme="matrix-green"] .border-\[\#1e2330\],
+[data-theme="matrix-green"] .border-\[\#1a1f2c\],
+[data-theme="matrix-green"] .border-\[\#181d28\],
+[data-theme="matrix-green"] .border-\[\#161a24\],
+[data-theme="matrix-green"] .border-\[\#1f2638\],
+[data-theme="matrix-green"] .border-\[\#252c3a\],
+[data-theme="matrix-green"] .border-\[\#252f44\] {
+  border-color: #1a3320 !important;
+}
+
+[data-theme="matrix-green"] .text-\[\#00d4c8\],
+[data-theme="matrix-green"] .bg-\[\#00d4c8\] {
+  color: #00ff66 !important;
+}
+[data-theme="matrix-green"] .bg-\[\#00d4c8\] {
+  background-color: #00ff66 !important;
+}
+
+/* ─── 3. SOLAR AMBER THEME ──────────────────────────────────── */
+[data-theme="solar-amber"] {
+  --bg-base:        #0a0805;
+  --bg-surface:     #14100a;
+  --bg-panel:       #1c160e;
+  --bg-card:        #261e14;
+  --bg-hover:       #33281a;
+  --border-dim:     #2b2114;
+  --border-def:     #3d2e1c;
+  --border-strong:  #5c452a;
+  --accent:         #f59e0b;
+  --accent-dim:     rgba(245, 158, 11, 0.12);
+  --accent-glow:    rgba(245, 158, 11, 0.25);
+  --text-primary:   #fef3c7;
+  --text-secondary: #fde68a;
+  --text-muted:     #b4530980;
+}
+
+[data-theme="solar-amber"] body,
+[data-theme="solar-amber"] #root,
+[data-theme="solar-amber"] main,
+[data-theme="solar-amber"] .bg-\[\#0a0c0f\],
+[data-theme="solar-amber"] .bg-\[\#07090d\],
+[data-theme="solar-amber"] .bg-\[\#0a0c10\],
+[data-theme="solar-amber"] .bg-\[\#080a0d\] {
+  background-color: #0a0805 !important;
+}
+
+[data-theme="solar-amber"] aside,
+[data-theme="solar-amber"] header,
+[data-theme="solar-amber"] .bg-\[\#101318\],
+[data-theme="solar-amber"] .bg-\[\#0c0e14\],
+[data-theme="solar-amber"] .bg-\[\#141820\],
+[data-theme="solar-amber"] .bg-\[\#10141c\],
+[data-theme="solar-amber"] .bg-\[\#10141e\],
+[data-theme="solar-amber"] .bg-\[\#121622\],
+[data-theme="solar-amber"] .bg-\[\#0b0e14\],
+[data-theme="solar-amber"] .bg-\[\#0d1017\] {
+  background-color: #151009 !important;
+}
+
+[data-theme="solar-amber"] .border-\[\#1e2330\],
+[data-theme="solar-amber"] .border-\[\#1a1f2c\],
+[data-theme="solar-amber"] .border-\[\#181d28\],
+[data-theme="solar-amber"] .border-\[\#161a24\],
+[data-theme="solar-amber"] .border-\[\#1f2638\],
+[data-theme="solar-amber"] .border-\[\#252c3a\],
+[data-theme="solar-amber"] .border-\[\#252f44\] {
+  border-color: #382818 !important;
+}
+
+[data-theme="solar-amber"] .text-\[\#00d4c8\] {
+  color: #f59e0b !important;
+}
+[data-theme="solar-amber"] .bg-\[\#00d4c8\] {
+  background-color: #f59e0b !important;
+}
+
+/* ─── 4. ELECTRIC COBALT THEME ──────────────────────────────── */
+[data-theme="electric-cobalt"] {
+  --bg-base:        #060a14;
+  --bg-surface:     #0b1222;
+  --bg-panel:       #101b33;
+  --bg-card:        #152445;
+  --bg-hover:       #1c305c;
+  --border-dim:     #18284d;
+  --border-def:     #223a6e;
+  --border-strong:  #3458a6;
+  --accent:         #38bdf8;
+  --accent-dim:     rgba(56, 189, 248, 0.12);
+  --accent-glow:    rgba(56, 189, 248, 0.25);
+  --text-primary:   #e0f2fe;
+  --text-secondary: #bae6fd;
+  --text-muted:     #38bdf860;
+}
+
+[data-theme="electric-cobalt"] body,
+[data-theme="electric-cobalt"] #root,
+[data-theme="electric-cobalt"] main,
+[data-theme="electric-cobalt"] .bg-\[\#0a0c0f\],
+[data-theme="electric-cobalt"] .bg-\[\#07090d\],
+[data-theme="electric-cobalt"] .bg-\[\#0a0c10\],
+[data-theme="electric-cobalt"] .bg-\[\#080a0d\] {
+  background-color: #060a14 !important;
+}
+
+[data-theme="electric-cobalt"] aside,
+[data-theme="electric-cobalt"] header,
+[data-theme="electric-cobalt"] .bg-\[\#101318\],
+[data-theme="electric-cobalt"] .bg-\[\#0c0e14\],
+[data-theme="electric-cobalt"] .bg-\[\#141820\],
+[data-theme="electric-cobalt"] .bg-\[\#10141c\],
+[data-theme="electric-cobalt"] .bg-\[\#10141e\],
+[data-theme="electric-cobalt"] .bg-\[\#121622\],
+[data-theme="electric-cobalt"] .bg-\[\#0b0e14\],
+[data-theme="electric-cobalt"] .bg-\[\#0d1017\] {
+  background-color: #0b1426 !important;
+}
+
+[data-theme="electric-cobalt"] .border-\[\#1e2330\],
+[data-theme="electric-cobalt"] .border-\[\#1a1f2c\],
+[data-theme="electric-cobalt"] .border-\[\#181d28\],
+[data-theme="electric-cobalt"] .border-\[\#161a24\],
+[data-theme="electric-cobalt"] .border-\[\#1f2638\],
+[data-theme="electric-cobalt"] .border-\[\#252c3a\],
+[data-theme="electric-cobalt"] .border-\[\#252f44\] {
+  border-color: #1b2f56 !important;
+}
+
+[data-theme="electric-cobalt"] .text-\[\#00d4c8\] {
+  color: #38bdf8 !important;
+}
+[data-theme="electric-cobalt"] .bg-\[\#00d4c8\] {
+  background-color: #38bdf8 !important;
+}
+
+/* ─── 5. SYNTHWAVE PURPLE THEME ─────────────────────────────── */
+[data-theme="synthwave-purple"] {
+  --bg-base:        #0a0614;
+  --bg-surface:     #120a22;
+  --bg-panel:       #1a0f33;
+  --bg-card:        #241545;
+  --bg-hover:       #311c5e;
+  --border-dim:     #29174d;
+  --border-def:     #3b216e;
+  --border-strong:  #5932a6;
+  --accent:         #c084fc;
+  --accent-dim:     rgba(192, 132, 252, 0.12);
+  --accent-glow:    rgba(192, 132, 252, 0.25);
+  --text-primary:   #f3e8ff;
+  --text-secondary: #e9d5ff;
+  --text-muted:     #a855f760;
+}
+
+[data-theme="synthwave-purple"] body,
+[data-theme="synthwave-purple"] #root,
+[data-theme="synthwave-purple"] main,
+[data-theme="synthwave-purple"] .bg-\[\#0a0c0f\],
+[data-theme="synthwave-purple"] .bg-\[\#07090d\],
+[data-theme="synthwave-purple"] .bg-\[\#0a0c10\],
+[data-theme="synthwave-purple"] .bg-\[\#080a0d\] {
+  background-color: #0a0614 !important;
+}
+
+[data-theme="synthwave-purple"] aside,
+[data-theme="synthwave-purple"] header,
+[data-theme="synthwave-purple"] .bg-\[\#101318\],
+[data-theme="synthwave-purple"] .bg-\[\#0c0e14\],
+[data-theme="synthwave-purple"] .bg-\[\#141820\],
+[data-theme="synthwave-purple"] .bg-\[\#10141c\],
+[data-theme="synthwave-purple"] .bg-\[\#10141e\],
+[data-theme="synthwave-purple"] .bg-\[\#121622\],
+[data-theme="synthwave-purple"] .bg-\[\#0b0e14\],
+[data-theme="synthwave-purple"] .bg-\[\#0d1017\] {
+  background-color: #140b28 !important;
+}
+
+[data-theme="synthwave-purple"] .border-\[\#1e2330\],
+[data-theme="synthwave-purple"] .border-\[\#1a1f2c\],
+[data-theme="synthwave-purple"] .border-\[\#181d28\],
+[data-theme="synthwave-purple"] .border-\[\#161a24\],
+[data-theme="synthwave-purple"] .border-\[\#1f2638\],
+[data-theme="synthwave-purple"] .border-\[\#252c3a\],
+[data-theme="synthwave-purple"] .border-\[\#252f44\] {
+  border-color: #33175c !important;
+}
+
+[data-theme="synthwave-purple"] .text-\[\#00d4c8\] {
+  color: #c084fc !important;
+}
+[data-theme="synthwave-purple"] .bg-\[\#00d4c8\] {
+  background-color: #c084fc !important;
 }
