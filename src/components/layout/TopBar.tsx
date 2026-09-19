@@ -3,6 +3,7 @@ import { Search, Plus, Bell, Command, Menu, ChevronDown, Check, ShieldAlert, Fol
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDevHub } from '@/context/DevHubContext';
 import ThemeSwitcher from '../ui/ThemeSwitcher';
+import ThemeToggleBtn from '../ui/ThemeToggleBtn';
 
 interface TopBarProps {
   onToggleMobile: () => void;
@@ -282,9 +283,12 @@ export const TopBar: React.FC<TopBarProps> = ({ onToggleMobile }) => {
         )}
       </div>
 
-      {/* ── RIGHT: Theme Switcher, Quick Actions, Admin & Profile ── */}
+      {/* ── RIGHT: Theme Toggle (Light/Dark), Theme Switcher, Quick Actions, Profile ── */}
       <div className="flex items-center gap-2">
-        {/* 5-Theme Toggle Button */}
+        {/* Direct 1-Click Light / Dark Mode Toggle */}
+        <ThemeToggleBtn />
+
+        {/* 6-Theme Color Palettes Switcher */}
         <ThemeSwitcher />
 
         {/* Quick Add Menu */}

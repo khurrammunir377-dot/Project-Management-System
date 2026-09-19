@@ -119,6 +119,29 @@
   --status-bug:     #fb7185;
 }
 
+/* ─── Theme 6: Light Mode / High-Contrast Precision ────────── */
+[data-theme="light-pro"] {
+  --bg-base:        #f8fafc;
+  --bg-surface:     #ffffff;
+  --bg-panel:       #f1f5f9;
+  --bg-card:        #ffffff;
+  --bg-hover:       #e2e8f0;
+  --border-dim:     #e2e8f0;
+  --border-def:     #cbd5e1;
+  --border-strong:  #94a3b8;
+  --accent:         #0284c7;
+  --accent-dim:     rgba(2, 132, 199, 0.12);
+  --accent-glow:    rgba(2, 132, 199, 0.25);
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #64748b;
+  --status-dev:     #2563eb;
+  --status-test:    #d97706;
+  --status-prod:    #059669;
+  --status-hold:    #475569;
+  --status-bug:     #dc2626;
+}
+
 /* ─── Base Reset & High-Fidelity Typography ──────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;

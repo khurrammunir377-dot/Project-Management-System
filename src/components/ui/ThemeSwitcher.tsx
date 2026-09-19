@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDevHub } from '@/context/DevHubContext';
-import { Palette, Check, Sparkles } from 'lucide-react';
+import { Palette, Check, Sun, Moon } from 'lucide-react';
 import { AppTheme } from '@/types';
 
 interface ThemeOption {
@@ -9,6 +9,7 @@ interface ThemeOption {
   dotColor: string;
   bgPreview: string;
   tag: string;
+  isLight?: boolean;
 }
 
 const themeOptions: ThemeOption[] = [
@@ -17,35 +18,43 @@ const themeOptions: ThemeOption[] = [
     name: 'Cyber Teal',
     dotColor: '#00d4c8',
     bgPreview: '#0a0c0f',
-    tag: 'Graphite / Cyan',
+    tag: 'Graphite / Cyan (Dark)',
   },
   {
     id: 'matrix-green',
     name: 'Matrix Terminal',
     dotColor: '#00ff66',
     bgPreview: '#040805',
-    tag: 'Phosphor Green',
+    tag: 'Phosphor Green (Dark)',
   },
   {
     id: 'solar-amber',
     name: 'Solar Amber',
     dotColor: '#f59e0b',
     bgPreview: '#0a0805',
-    tag: 'War Room Tactical',
+    tag: 'War Room Tactical (Dark)',
   },
   {
     id: 'electric-cobalt',
     name: 'Electric Cobalt',
     dotColor: '#38bdf8',
     bgPreview: '#060a14',
-    tag: 'Midnight Blue',
+    tag: 'Midnight Blue (Dark)',
   },
   {
     id: 'synthwave-purple',
     name: 'Synthwave Purple',
     dotColor: '#c084fc',
     bgPreview: '#0a0614',
-    tag: 'Neon Violet',
+    tag: 'Neon Violet (Dark)',
+  },
+  {
+    id: 'light-pro',
+    name: 'Light Console Pro',
+    dotColor: '#0284c7',
+    bgPreview: '#f8fafc',
+    tag: 'Clean Precision (Light)',
+    isLight: true,
   },
 ];
 
@@ -72,7 +81,7 @@ export const ThemeSwitcher: React.FC = () => {
         type="button"
         onClick={() => setOpen(!open)}
         className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#121622] hover:bg-[#151a28] border border-[#1f2638] hover:border-[#00d4c840] rounded-[2px] font-mono text-xs text-[#dce4f0] transition-all group"
-        title="Switch Console Color Theme (5 Themes)"
+        title="Switch Console Color Theme (6 Themes + Light Mode)"
       >
         <span
           className="w-2.5 h-2.5 rounded-full flex-shrink-0 animate-pulse"
@@ -85,12 +94,12 @@ export const ThemeSwitcher: React.FC = () => {
         <Palette size={13} className="text-[#7a8899] group-hover:text-[#dce4f0]" />
       </button>
 
-      {/* 5-Theme Selector Popover */}
+      {/* 6-Theme Selector Popover */}
       {open && (
         <div className="absolute right-0 top-full mt-1.5 w-64 bg-[#10141e] border border-[#252f44] rounded-[2px] shadow-[0_10px_30px_rgba(0,0,0,0.85)] z-50 py-1.5 font-mono text-xs divide-y divide-[#1a2130]">
           <div className="px-3 py-1.5 text-[9.5px] uppercase tracking-widest text-[#55637a] flex items-center justify-between">
-            <span>ENGINEERING COLOR THEMES</span>
-            <span className="text-[#00d4c8]">5 OPTIONS</span>
+            <span>ENGINEERING THEMES</span>
+            <span className="text-[#00d4c8]">LIGHT / DARK</span>
           </div>
 
           <div className="p-1 space-y-1">
@@ -119,10 +128,11 @@ export const ThemeSwitcher: React.FC = () => {
                     </div>
                     <div>
                       <div
-                        className="text-xs font-bold"
+                        className="text-xs font-bold flex items-center gap-1.5"
                         style={{ color: isSelected ? opt.dotColor : '#dce4f0' }}
                       >
-                        {opt.name}
+                        <span>{opt.name}</span>
+                        {opt.isLight ? <Sun size={10} className="text-[#f59e0b]" /> : <Moon size={10} className="text-[#38bdf8]" />}
                       </div>
                       <div className="text-[9.5px] text-[#6b7b94]">{opt.tag}</div>
                     </div>

@@ -12,7 +12,8 @@ export type AppTheme =
   | 'matrix-green'
   | 'solar-amber'
   | 'electric-cobalt'
-  | 'synthwave-purple';
+  | 'synthwave-purple'
+  | 'light-pro';
 
 // ─── Attachments ──────────────────────────────────────────────────
 export interface ProjectScreenshot {
