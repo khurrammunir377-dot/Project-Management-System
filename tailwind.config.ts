@@ -43,8 +43,8 @@ export default {
         'status-idea':    '#8b5cf6',
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Calibri', 'Carlito', 'Candara', 'Segoe UI', 'Arial', 'sans-serif'],
+        sans: ['Calibri', 'Carlito', 'Candara', 'Segoe UI', 'Arial', 'sans-serif'],
       },
       fontSize: {
         '2xs': ['0.65rem', { lineHeight: '1rem' }],

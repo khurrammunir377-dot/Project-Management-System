@@ -80,7 +80,7 @@ export default function Landing() {
   return (
     <div
       className="min-h-screen w-full flex overflow-hidden select-none"
-      style={{ background: '#0a0c0f', fontFamily: "'Inter', sans-serif" }}
+      style={{ background: '#0a0c0f', fontFamily: "'Calibri', 'Carlito', 'Candara', 'Segoe UI', Arial, sans-serif" }}
     >
       {/* Scanline subtle CRT effect overlay */}
       <div className="scanline" />
