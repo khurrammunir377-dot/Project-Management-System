@@ -363,7 +363,7 @@ export default function AiStudio() {
               className={`px-2.5 py-1 rounded-[2px] font-bold transition-all ${
                 activeTab === 'chat'
                   ? 'bg-[#00d4c8] text-black shadow-sm'
-                  : 'text-[#64748b] hover:text-[#00d4c8]'
+                  : 'text-[#64748b] hover:text-[#0f172a] dark:text-[#7a8899] dark:hover:text-[#00d4c8]'
               }`}
             >
               CHAT
@@ -373,7 +373,7 @@ export default function AiStudio() {
               className={`px-2.5 py-1 rounded-[2px] font-bold transition-all ${
                 activeTab === 'split'
                   ? 'bg-[#00d4c8] text-black shadow-sm'
-                  : 'text-[#64748b] hover:text-[#00d4c8]'
+                  : 'text-[#64748b] hover:text-[#0f172a] dark:text-[#7a8899] dark:hover:text-[#00d4c8]'
               }`}
             >
               SPLIT CODE
@@ -383,7 +383,7 @@ export default function AiStudio() {
               className={`px-2.5 py-1 rounded-[2px] font-bold transition-all ${
                 activeTab === 'sandbox'
                   ? 'bg-[#00d4c8] text-black shadow-sm'
-                  : 'text-[#64748b] hover:text-[#00d4c8]'
+                  : 'text-[#64748b] hover:text-[#0f172a] dark:text-[#7a8899] dark:hover:text-[#00d4c8]'
               }`}
             >
               SANDBOX
@@ -396,7 +396,9 @@ export default function AiStudio() {
             onClick={() => setShowSettings(true)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[3px] font-mono text-xs font-bold border transition-all ${
               apiKey
-                ? 'bg-[#10b98115] border-[#10b98150] text-[#10b981] hover:bg-[#10b98125]'
+                ? 'bg-[#10b98115] border-[#10b98150] text-[#059669] dark:text-[#10b981] hover:bg-[#10b98125]'
+                : isLight
+                ? 'bg-[#e0f2fe] border-[#0284c7] text-[#0284c7] hover:bg-[#bae6fd]'
                 : 'bg-[#00d4c815] border-[#00d4c850] text-[#00d4c8] hover:bg-[#00d4c825]'
             }`}
             title="Configure AI API Keys & Models"

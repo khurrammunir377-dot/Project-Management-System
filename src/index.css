@@ -264,10 +264,20 @@ td {
   border-color: #e2e8f0 !important;
 }
 
-/* Light Mode: Text Colors */
+/* Light Mode: Text Colors & Headings */
+[data-theme="light-pro"] h1,
+[data-theme="light-pro"] h2,
+[data-theme="light-pro"] h3,
+[data-theme="light-pro"] h4,
+[data-theme="light-pro"] h5,
+[data-theme="light-pro"] h6 {
+  color: #0f172a !important;
+}
+
 [data-theme="light-pro"] .text-\[\#dce4f0\],
 [data-theme="light-pro"] .text-\[\#e2e8f0\],
 [data-theme="light-pro"] .text-\[\#f1f5f9\],
+[data-theme="light-pro"] .text-\[\#f8fafc\],
 [data-theme="light-pro"] .text-\[\#c5d1e0\] {
   color: #0f172a !important;
 }
@@ -291,9 +301,16 @@ td {
 [data-theme="light-pro"] a:hover,
 [data-theme="light-pro"] .hover\:text-\[\#dce4f0\]:hover,
 [data-theme="light-pro"] .hover\:text-\[\#f1f5f9\]:hover,
+[data-theme="light-pro"] .hover\:text-\[\#f8fafc\]:hover,
 [data-theme="light-pro"] .hover\:text-\[\#e2e8f0\]:hover,
 [data-theme="light-pro"] .hover\:text-white:hover {
   color: #0f172a !important;
+}
+
+[data-theme="light-pro"] .hover\:text-\[\#00d4c8\]:hover,
+[data-theme="light-pro"] .group:hover .group-hover\:text-\[\#00d4c8\],
+[data-theme="light-pro"] .group:hover .group-hover\:text-\[\#0284c7\] {
+  color: #0284c7 !important;
 }
 
 [data-theme="light-pro"] .hover\:bg-\[\#121622\]:hover,
@@ -310,7 +327,8 @@ td {
 
 /* Light Mode: Selected Tabs */
 [data-theme="light-pro"] .border-b-2.border-\[\#00d4c8\],
-[data-theme="light-pro"] .border-b-2[class*="text-\[\#00d4c8\]"] {
+[data-theme="light-pro"] .border-b-2[class*="text-\[\#00d4c8\]"],
+[data-theme="light-pro"] [class*="border-\[\#00d4c8\].text-\[\#00d4c8\]"] {
   border-bottom-color: #0284c7 !important;
   color: #0284c7 !important;
   background-color: #f0f9ff !important;

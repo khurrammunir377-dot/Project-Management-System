@@ -5,7 +5,7 @@ import {
   ExternalLink, Mail, Phone, MapPin, Github, Linkedin, ChevronRight,
   Sparkles, Layers, CheckCircle2, ArrowUpRight, Terminal, Globe,
   Activity, Star, UserCheck, Eye, EyeOff, Lock, RefreshCw, KeyRound,
-  FolderGit2
+  FolderGit2, Award, Check
 } from 'lucide-react';
 import DevHubLogo from '@/components/ui/DevHubLogo';
 import ThemeSwitcher from '@/components/ui/ThemeSwitcher';
@@ -19,7 +19,7 @@ export default function Landing() {
   // State
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [searchFilter, setSearchFilter] = useState('');
-  const [activeTab, setActiveTab] = useState<'portfolio' | 'skills' | 'ai-copilot' | 'auth'>('portfolio');
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'skills' | 'auth'>('portfolio');
   const [username, setUsername] = useState('khurram.munir');
   const [password, setPassword] = useState('devhub2026');
   const [showPass, setShowPass] = useState(false);
@@ -75,21 +75,21 @@ export default function Landing() {
       {/* ── HEADER NAVBAR ────────────────────────────────────────────── */}
       <header
         className={`sticky top-0 z-50 w-full px-4 sm:px-8 py-3 border-b backdrop-blur-md transition-colors ${
-          isLight ? 'bg-[#ffffff]/90 border-[#e2e8f0]' : 'bg-[#0d1017]/95 border-[#1e2330]'
+          isLight ? 'bg-[#ffffff]/95 border-[#e2e8f0] shadow-sm' : 'bg-[#0d1017]/95 border-[#1e2330]'
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo & Name */}
           <div className="flex items-center gap-3">
             <DevHubLogo size="md" />
-            <div className="hidden sm:block pl-3 border-l border-[#1e2330]">
-              <div className="font-bold text-sm tracking-tight text-[#f1f5f9] flex items-center gap-1.5">
+            <div className="hidden sm:block pl-3 border-l border-[#cbd5e1] dark:border-[#1e2330]">
+              <div className="font-bold text-sm tracking-tight text-[#0f172a] dark:text-[#f1f5f9] flex items-center gap-1.5">
                 <span>Khurram Munir Basra</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.2 bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c840] rounded-[2px]">
+                <span className="text-[10.5px] font-mono px-2 py-0.5 bg-[#00d4c815] text-[#0284c7] dark:text-[#00d4c8] border border-[#00d4c840] rounded-[2px] font-bold">
                   PORTFOLIO & COMMAND CENTER
                 </span>
               </div>
-              <div className="text-[10.5px] text-[#7a8899] font-mono">
+              <div className="text-[11px] text-[#64748b] dark:text-[#7a8899] font-mono">
                 Lead Architect • Full Stack & Enterprise Engineer
               </div>
             </div>
@@ -99,37 +99,49 @@ export default function Landing() {
           <div className="hidden md:flex items-center gap-2 font-mono text-xs">
             <button
               onClick={() => setActiveTab('portfolio')}
-              className={`px-3 py-1.5 rounded-[3px] transition-colors ${
+              className={`px-3 py-1.5 rounded-[3px] font-bold transition-all cursor-pointer ${
                 activeTab === 'portfolio'
-                  ? 'bg-[#00d4c815] text-[#00d4c8] font-bold border border-[#00d4c850]'
-                  : 'text-[#7a8899] hover:text-[#dce4f0]'
+                  ? isLight
+                    ? 'bg-[#e0f2fe] text-[#0284c7] border border-[#0284c7]'
+                    : 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850]'
+                  : isLight
+                  ? 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                  : 'text-[#7a8899] hover:text-[#ffffff] hover:bg-[#141820]'
               }`}
             >
               PROJECTS ({totalProjects})
             </button>
             <button
               onClick={() => setActiveTab('skills')}
-              className={`px-3 py-1.5 rounded-[3px] transition-colors ${
+              className={`px-3 py-1.5 rounded-[3px] font-bold transition-all cursor-pointer ${
                 activeTab === 'skills'
-                  ? 'bg-[#00d4c815] text-[#00d4c8] font-bold border border-[#00d4c850]'
-                  : 'text-[#7a8899] hover:text-[#dce4f0]'
+                  ? isLight
+                    ? 'bg-[#e0f2fe] text-[#0284c7] border border-[#0284c7]'
+                    : 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850]'
+                  : isLight
+                  ? 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                  : 'text-[#7a8899] hover:text-[#ffffff] hover:bg-[#141820]'
               }`}
             >
               ARCHITECTURE & SKILLS
             </button>
             <button
               onClick={() => navigate('/ai-studio')}
-              className="px-3 py-1.5 rounded-[3px] bg-[#a855f715] text-[#c084fc] hover:bg-[#a855f725] border border-[#a855f750] font-bold transition-all flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-[3px] bg-[#a855f715] text-[#9333ea] dark:text-[#c084fc] hover:bg-[#a855f725] border border-[#a855f750] font-bold transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Bot size={13} />
-              <span>AI DEV STUDIO</span>
+              <Bot size={14} />
+              <span>AI DEV STUDIO (GROK / GPT-4o)</span>
             </button>
             <button
               onClick={() => setActiveTab('auth')}
-              className={`px-3 py-1.5 rounded-[3px] transition-colors ${
+              className={`px-3 py-1.5 rounded-[3px] font-bold transition-all cursor-pointer ${
                 activeTab === 'auth'
-                  ? 'bg-[#00d4c815] text-[#00d4c8] font-bold border border-[#00d4c850]'
-                  : 'text-[#7a8899] hover:text-[#dce4f0]'
+                  ? isLight
+                    ? 'bg-[#e0f2fe] text-[#0284c7] border border-[#0284c7]'
+                    : 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850]'
+                  : isLight
+                  ? 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                  : 'text-[#7a8899] hover:text-[#ffffff] hover:bg-[#141820]'
               }`}
             >
               OPERATOR LOGIN
@@ -158,22 +170,22 @@ export default function Landing() {
           isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#0d1017] border-[#1e2330]'
         }`}
       >
-        <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none" />
+        <div className="absolute inset-0 bg-grid opacity-30 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Left Bio & Value Proposition */}
             <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00d4c815] border border-[#00d4c840] rounded-[3px] font-mono text-xs text-[#00d4c8] font-bold">
-                <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00d4c815] border border-[#00d4c840] rounded-[3px] font-mono text-xs text-[#0284c7] dark:text-[#00d4c8] font-bold">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#10b981] animate-pulse" />
                 <span>AVAILABLE FOR ARCHITECTURE & ENTERPRISE ENGINEERING</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#f8fafc]">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#0f172a] dark:text-[#f8fafc]">
                 Khurram Munir Basra
               </h1>
 
-              <div className="text-sm sm:text-base text-[#00d4c8] font-mono font-bold flex flex-wrap items-center gap-x-2 gap-y-1">
+              <div className="text-sm sm:text-base text-[#0284c7] dark:text-[#00d4c8] font-mono font-bold flex flex-wrap items-center gap-x-2 gap-y-1">
                 <span>Principal Full-Stack Architect</span>
                 <span>•</span>
                 <span>Python / Django & PostgreSQL</span>
@@ -183,30 +195,44 @@ export default function Landing() {
                 <span>AI Engineering</span>
               </div>
 
-              <p className="text-xs sm:text-sm text-[#94a3b8] leading-relaxed max-w-3xl">
-                Senior systems architect with extensive track record building mission-critical enterprise platforms, including high-scale inventory and material management systems for <strong className="text-[#f1f5f9]">UUDS Dubai Airport Stores</strong>, aviation MRO operations, cross-platform mobile apps, and custom AI copilot integrations.
+              <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94a3b8] leading-relaxed max-w-3xl">
+                Senior systems architect with extensive track record building mission-critical enterprise platforms, including high-scale inventory and material management systems for <strong className="text-[#0f172a] dark:text-[#f1f5f9]">UUDS Dubai Airport Stores</strong>, aviation MRO operations, cross-platform mobile apps, and custom AI copilot integrations.
               </p>
 
               {/* Contact / Connect Badges */}
-              <div className="flex flex-wrap items-center gap-3 pt-2 font-mono text-xs text-[#7a8899]">
+              <div className="flex flex-wrap items-center gap-3 pt-2 font-mono text-xs">
                 <a
                   href="mailto:khurrammunir377@gmail.com"
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border border-[#252c3a] rounded-[3px] transition-colors"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[3px] border transition-colors ${
+                    isLight
+                      ? 'bg-[#f8fafc] hover:bg-[#f1f5f9] text-[#0f172a] hover:text-[#0284c7] border-[#cbd5e1]'
+                      : 'bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border-[#252c3a]'
+                  }`}
                 >
-                  <Mail size={13} className="text-[#00d4c8]" />
+                  <Mail size={14} className="text-[#0284c7] dark:text-[#00d4c8]" />
                   <span>khurrammunir377@gmail.com</span>
                 </a>
                 <a
                   href="https://github.com/khurrammunir377-dot"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border border-[#252c3a] rounded-[3px] transition-colors"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[3px] border transition-colors ${
+                    isLight
+                      ? 'bg-[#f8fafc] hover:bg-[#f1f5f9] text-[#0f172a] hover:text-[#0284c7] border-[#cbd5e1]'
+                      : 'bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border-[#252c3a]'
+                  }`}
                 >
-                  <Github size={13} className="text-[#38bdf8]" />
+                  <Github size={14} className="text-[#0284c7] dark:text-[#38bdf8]" />
                   <span>github.com/khurrammunir377-dot</span>
                 </a>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[3px]">
-                  <MapPin size={13} className="text-[#f59e0b]" />
+                <div
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-[3px] border ${
+                    isLight
+                      ? 'bg-[#f8fafc] text-[#334155] border-[#cbd5e1]'
+                      : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'
+                  }`}
+                >
+                  <MapPin size={14} className="text-[#d97706] dark:text-[#f59e0b]" />
                   <span>Dubai, United Arab Emirates</span>
                 </div>
               </div>
@@ -226,7 +252,7 @@ export default function Landing() {
                 <button
                   type="button"
                   onClick={() => navigate('/ai-studio')}
-                  className="px-4 py-2.5 bg-[#a855f715] hover:bg-[#a855f730] text-[#c084fc] border border-[#a855f760] font-bold text-xs rounded-[3px] flex items-center gap-2 transition-all"
+                  className="px-4 py-2.5 bg-[#a855f715] hover:bg-[#a855f730] text-[#9333ea] dark:text-[#c084fc] border border-[#a855f760] font-bold text-xs rounded-[3px] flex items-center gap-2 transition-all cursor-pointer"
                 >
                   <Bot size={15} />
                   <span>OPEN AI DEV STUDIO</span>
@@ -235,7 +261,11 @@ export default function Landing() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('portfolio')}
-                  className="px-4 py-2.5 bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border border-[#252c3a] font-bold text-xs rounded-[3px] flex items-center gap-2 transition-all"
+                  className={`px-4 py-2.5 rounded-[3px] border font-bold text-xs flex items-center gap-2 transition-all cursor-pointer ${
+                    isLight
+                      ? 'bg-[#f8fafc] hover:bg-[#f1f5f9] text-[#0f172a] hover:text-[#0284c7] border-[#cbd5e1]'
+                      : 'bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border-[#252c3a]'
+                  }`}
                 >
                   <FolderGit2 size={15} />
                   <span>VIEW 31 PORTFOLIO PROJECTS</span>
@@ -245,45 +275,49 @@ export default function Landing() {
 
             {/* Right KPI & Architecture Deck */}
             <div className="lg:col-span-4 space-y-3">
-              <div className="p-4 bg-[#101318] border border-[#1e2330] rounded-[4px] shadow-lg space-y-3 font-mono">
-                <div className="flex items-center justify-between pb-2 border-b border-[#1e2330] text-xs">
-                  <span className="text-[#00d4c8] font-bold flex items-center gap-1.5">
+              <div
+                className={`p-4 rounded-[4px] border shadow-md space-y-3 font-mono ${
+                  isLight ? 'bg-[#f8fafc] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'
+                }`}
+              >
+                <div className="flex items-center justify-between pb-2 border-b border-[#cbd5e1] dark:border-[#1e2330] text-xs">
+                  <span className="text-[#0284c7] dark:text-[#00d4c8] font-bold flex items-center gap-1.5">
                     <Activity size={14} /> PRODUCTION BENCHMARKS
                   </span>
-                  <span className="text-[#10b981] font-bold">100% RELIABILITY</span>
+                  <span className="text-[#059669] dark:text-[#10b981] font-bold">100% RELIABILITY</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
-                    <div className="text-2xl font-black text-[#00d4c8]">{totalProjects}</div>
-                    <div className="text-[9px] text-[#7a8899] uppercase">DELIVERED SYSTEMS</div>
+                  <div className={`p-2.5 rounded-[2px] text-center border ${isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#141820] border-[#1e2535]'}`}>
+                    <div className="text-2xl font-black text-[#0284c7] dark:text-[#00d4c8]">{totalProjects}</div>
+                    <div className="text-[9.5px] text-[#64748b] dark:text-[#7a8899] uppercase font-bold">DELIVERED SYSTEMS</div>
                   </div>
-                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
-                    <div className="text-2xl font-black text-[#10b981]">{productionProjects}</div>
-                    <div className="text-[9px] text-[#7a8899] uppercase">IN LIVE PRODUCTION</div>
+                  <div className={`p-2.5 rounded-[2px] text-center border ${isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#141820] border-[#1e2535]'}`}>
+                    <div className="text-2xl font-black text-[#059669] dark:text-[#10b981]">{productionProjects}</div>
+                    <div className="text-[9.5px] text-[#64748b] dark:text-[#7a8899] uppercase font-bold">IN LIVE PRODUCTION</div>
                   </div>
-                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
-                    <div className="text-2xl font-black text-[#38bdf8]">{uudsProjects}</div>
-                    <div className="text-[9px] text-[#7a8899] uppercase">UUDS AIRPORT APPS</div>
+                  <div className={`p-2.5 rounded-[2px] text-center border ${isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#141820] border-[#1e2535]'}`}>
+                    <div className="text-2xl font-black text-[#0284c7] dark:text-[#38bdf8]">{uudsProjects}</div>
+                    <div className="text-[9.5px] text-[#64748b] dark:text-[#7a8899] uppercase font-bold">UUDS AIRPORT APPS</div>
                   </div>
-                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
-                    <div className="text-2xl font-black text-[#c084fc]">99.98%</div>
-                    <div className="text-[9px] text-[#7a8899] uppercase">SYSTEM UPTIME</div>
+                  <div className={`p-2.5 rounded-[2px] text-center border ${isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#141820] border-[#1e2535]'}`}>
+                    <div className="text-2xl font-black text-[#7c3aed] dark:text-[#c084fc]">99.98%</div>
+                    <div className="text-[9.5px] text-[#64748b] dark:text-[#7a8899] uppercase font-bold">SYSTEM UPTIME</div>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#1e2330] text-[10px] text-[#7a8899] space-y-1">
+                <div className="pt-2 border-t border-[#cbd5e1] dark:border-[#1e2330] text-[11px] text-[#475569] dark:text-[#7a8899] space-y-1">
                   <div className="flex justify-between">
                     <span>Key Client:</span>
-                    <strong className="text-[#dce4f0]">UUDS Airport Stores (DXB)</strong>
+                    <strong className="text-[#0f172a] dark:text-[#dce4f0]">UUDS Airport Stores (DXB)</strong>
                   </div>
                   <div className="flex justify-between">
                     <span>Primary Stack:</span>
-                    <strong className="text-[#00d4c8]">Django / Waitress / PostgreSQL</strong>
+                    <strong className="text-[#0284c7] dark:text-[#00d4c8]">Django / Waitress / PostgreSQL</strong>
                   </div>
                   <div className="flex justify-between">
                     <span>Mobile Platform:</span>
-                    <strong className="text-[#38bdf8]">Flutter / Dart Android Apps</strong>
+                    <strong className="text-[#0284c7] dark:text-[#38bdf8]">Flutter / Dart Android Apps</strong>
                   </div>
                 </div>
               </div>
@@ -295,17 +329,19 @@ export default function Landing() {
       {/* ── TAB SELECTOR RIBBON ─────────────────────────────────────── */}
       <div
         className={`sticky top-[57px] z-40 w-full px-4 sm:px-8 py-2.5 border-b font-mono text-xs ${
-          isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#0d1017] border-[#1e2330]'
+          isLight ? 'bg-[#ffffff] border-[#e2e8f0] shadow-sm' : 'bg-[#0d1017] border-[#1e2330]'
         }`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto">
           <div className="flex items-center gap-1.5 whitespace-nowrap">
             <button
               onClick={() => setActiveTab('portfolio')}
-              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'portfolio'
-                  ? 'bg-[#00d4c8] text-black shadow-sm'
-                  : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141820]'
+                  ? 'bg-[#00d4c8] text-black shadow-sm font-black'
+                  : isLight
+                  ? 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                  : 'text-[#7a8899] hover:text-[#ffffff] hover:bg-[#141820]'
               }`}
             >
               <FolderGit2 size={13} />
@@ -314,10 +350,12 @@ export default function Landing() {
 
             <button
               onClick={() => setActiveTab('skills')}
-              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'skills'
-                  ? 'bg-[#00d4c8] text-black shadow-sm'
-                  : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141820]'
+                  ? 'bg-[#00d4c8] text-black shadow-sm font-black'
+                  : isLight
+                  ? 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                  : 'text-[#7a8899] hover:text-[#ffffff] hover:bg-[#141820]'
               }`}
             >
               <Cpu size={13} />
@@ -326,7 +364,7 @@ export default function Landing() {
 
             <button
               onClick={() => navigate('/ai-studio')}
-              className="px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 bg-[#a855f715] text-[#c084fc] hover:bg-[#a855f725] border border-[#a855f750]"
+              className="px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 bg-[#a855f715] text-[#9333ea] dark:text-[#c084fc] hover:bg-[#a855f725] border border-[#a855f750] cursor-pointer"
             >
               <Bot size={13} />
               <span>AI COPILOT STUDIO (GROK / GPT-4o)</span>
@@ -334,10 +372,12 @@ export default function Landing() {
 
             <button
               onClick={() => setActiveTab('auth')}
-              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 cursor-pointer ${
                 activeTab === 'auth'
-                  ? 'bg-[#00d4c8] text-black shadow-sm'
-                  : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141820]'
+                  ? 'bg-[#00d4c8] text-black shadow-sm font-black'
+                  : isLight
+                  ? 'text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                  : 'text-[#7a8899] hover:text-[#ffffff] hover:bg-[#141820]'
               }`}
             >
               <Shield size={13} />
@@ -345,10 +385,10 @@ export default function Landing() {
             </button>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 text-[10.5px] text-[#55637a]">
+          <div className="hidden sm:flex items-center gap-2 text-[11px] text-[#64748b] dark:text-[#55637a]">
             <span>NODE: DXB_PORTFOLIO_PRO</span>
             <span>•</span>
-            <span className="text-[#10b981] font-bold">ONLINE</span>
+            <span className="text-[#059669] dark:text-[#10b981] font-bold">ONLINE</span>
           </div>
         </div>
       </div>
@@ -363,10 +403,14 @@ export default function Landing() {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1 rounded-[2px] font-bold uppercase transition-colors border ${
+                  className={`px-3 py-1.5 rounded-[2px] font-bold uppercase transition-colors border cursor-pointer ${
                     selectedCategory === cat
-                      ? 'bg-[#00d4c815] border-[#00d4c8] text-[#00d4c8]'
-                      : 'bg-[#141820] border-[#252c3a] text-[#7a8899] hover:text-[#dce4f0]'
+                      ? isLight
+                        ? 'bg-[#e0f2fe] border-[#0284c7] text-[#0284c7]'
+                        : 'bg-[#00d4c815] border-[#00d4c8] text-[#00d4c8]'
+                      : isLight
+                      ? 'bg-[#ffffff] border-[#cbd5e1] text-[#334155] hover:text-[#0f172a] hover:bg-[#f1f5f9]'
+                      : 'bg-[#141820] border-[#252c3a] text-[#7a8899] hover:text-[#ffffff]'
                   }`}
                 >
                   {cat}
@@ -379,8 +423,8 @@ export default function Landing() {
                 type="text"
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
-                placeholder="Search 31 projects, tech stack, or SKU..."
-                className={`w-full px-3 py-1.5 text-xs font-mono rounded-[2px] border outline-none ${
+                placeholder="Search 31 projects, stack, or SKU..."
+                className={`w-full px-3 py-2 text-xs font-mono rounded-[2px] border outline-none ${
                   isLight
                     ? 'bg-[#ffffff] border-[#cbd5e1] text-[#0f172a] focus:border-[#0284c7]'
                     : 'bg-[#101318] border-[#252c3a] text-[#dce4f0] focus:border-[#00d4c8]'
@@ -403,46 +447,50 @@ export default function Landing() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-xs font-bold text-[#00d4c8] bg-[#00d4c810] px-2 py-0.5 rounded-[2px] border border-[#00d4c830]">
+                    <span className="font-mono text-xs font-bold text-[#0284c7] dark:text-[#00d4c8] bg-[#00d4c810] px-2 py-0.5 rounded-[2px] border border-[#00d4c830]">
                       {proj.shortCode}
                     </span>
                     <span
-                      className={`font-mono text-[10px] px-2 py-0.5 rounded-[2px] font-bold ${
+                      className={`font-mono text-[10.5px] px-2 py-0.5 rounded-[2px] font-bold ${
                         proj.status === 'Production'
-                          ? 'bg-[#10b98115] text-[#10b981] border border-[#10b98140]'
+                          ? 'bg-[#10b98115] text-[#059669] dark:text-[#10b981] border border-[#10b98140]'
                           : proj.status === 'Testing'
-                          ? 'bg-[#f59e0b15] text-[#f59e0b] border border-[#f59e0b40]'
-                          : 'bg-[#3b82f615] text-[#3b82f6] border border-[#3b82f640]'
+                          ? 'bg-[#f59e0b15] text-[#d97706] dark:text-[#f59e0b] border border-[#f59e0b40]'
+                          : 'bg-[#3b82f615] text-[#2563eb] dark:text-[#3b82f6] border border-[#3b82f640]'
                       }`}
                     >
                       {proj.status}
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-sm text-[#f1f5f9] group-hover:text-[#00d4c8] transition-colors line-clamp-1">
+                  <h3 className="font-bold text-sm text-[#0f172a] dark:text-[#f1f5f9] group-hover:text-[#0284c7] dark:group-hover:text-[#00d4c8] transition-colors line-clamp-1">
                     {proj.name}
                   </h3>
 
-                  <p className="text-xs text-[#7a8899] mt-1.5 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-[#64748b] dark:text-[#7a8899] mt-1.5 line-clamp-2 leading-relaxed">
                     {proj.description}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#1e2330] space-y-2">
+                <div className="mt-4 pt-3 border-t border-[#e2e8f0] dark:border-[#1e2330] space-y-2">
                   <div className="flex flex-wrap items-center gap-1 font-mono text-[9.5px]">
                     {proj.stack.map((tech) => (
                       <span
                         key={tech}
-                        className="px-1.5 py-0.2 bg-[#141820] text-[#94a3b8] border border-[#252f44] rounded-[2px]"
+                        className={`px-1.5 py-0.2 rounded-[2px] border ${
+                          isLight
+                            ? 'bg-[#f1f5f9] text-[#334155] border-[#cbd5e1]'
+                            : 'bg-[#141820] text-[#94a3b8] border-[#252f44]'
+                        }`}
                       >
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex items-center justify-between font-mono text-[10px] text-[#55637a] pt-1">
-                    <span className="text-[#38bdf8] font-bold">{proj.version}</span>
-                    <span className="group-hover:text-[#00d4c8] flex items-center gap-0.5 font-bold transition-colors">
+                  <div className="flex items-center justify-between font-mono text-[10.5px] text-[#64748b] dark:text-[#55637a] pt-1">
+                    <span className="text-[#0284c7] dark:text-[#38bdf8] font-bold">{proj.version}</span>
+                    <span className="group-hover:text-[#0284c7] dark:group-hover:text-[#00d4c8] flex items-center gap-0.5 font-bold transition-colors">
                       VIEW WORKSPACE <ArrowUpRight size={11} />
                     </span>
                   </div>
@@ -458,17 +506,17 @@ export default function Landing() {
         <section className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {/* Backend Architecture */}
-            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
-              <div className="flex items-center gap-2 text-[#00d4c8] font-mono text-sm font-bold">
+            <div className={`p-5 rounded-[4px] border space-y-3 ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-[#0284c7] dark:text-[#00d4c8] font-mono text-sm font-bold">
                 <Server size={18} />
                 <span>BACKEND ARCHITECTURE</span>
               </div>
-              <p className="text-xs text-[#7a8899]">
+              <p className="text-xs text-[#64748b] dark:text-[#7a8899]">
                 High-throughput, asynchronous, and robust backend engineering with atomic transactional safety.
               </p>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
                 {['Python 3.12', 'Django 5', 'Django REST Framework', 'Waitress WSGI', 'FastAPI', 'Celery', 'Redis', 'Gunicorn', 'WebSockets'].map(s => (
-                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                  <span key={s} className={`px-2 py-1 rounded-[2px] border ${isLight ? 'bg-[#f1f5f9] text-[#0f172a] border-[#cbd5e1]' : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'}`}>
                     {s}
                   </span>
                 ))}
@@ -476,17 +524,17 @@ export default function Landing() {
             </div>
 
             {/* Database & Data Integrity */}
-            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
-              <div className="flex items-center gap-2 text-[#10b981] font-mono text-sm font-bold">
+            <div className={`p-5 rounded-[4px] border space-y-3 ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-[#059669] dark:text-[#10b981] font-mono text-sm font-bold">
                 <Database size={18} />
                 <span>DATABASE & RELIABILITY</span>
               </div>
-              <p className="text-xs text-[#7a8899]">
+              <p className="text-xs text-[#64748b] dark:text-[#7a8899]">
                 High-volume schema design, indexing, partitioning, ACID compliance, and zero-downtime migrations.
               </p>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
                 {['PostgreSQL 16', 'Query Optimization', 'Index Tuning (B-Tree/GIN)', 'CTEs & Stored Procedures', 'Automated Daily Backups', 'Connection Pooling (PgBouncer)'].map(s => (
-                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                  <span key={s} className={`px-2 py-1 rounded-[2px] border ${isLight ? 'bg-[#f1f5f9] text-[#0f172a] border-[#cbd5e1]' : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'}`}>
                     {s}
                   </span>
                 ))}
@@ -494,17 +542,17 @@ export default function Landing() {
             </div>
 
             {/* Mobile & Flutter Engineering */}
-            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
-              <div className="flex items-center gap-2 text-[#38bdf8] font-mono text-sm font-bold">
+            <div className={`p-5 rounded-[4px] border space-y-3 ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-[#0284c7] dark:text-[#38bdf8] font-mono text-sm font-bold">
                 <Smartphone size={18} />
                 <span>MOBILE & FLUTTER</span>
               </div>
-              <p className="text-xs text-[#7a8899]">
+              <p className="text-xs text-[#64748b] dark:text-[#7a8899]">
                 Cross-platform Android and iOS applications with offline-first data caching and hardware camera integration.
               </p>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
                 {['Flutter 3.x', 'Dart', 'Barcode & QR Scanning', 'Haptic Feedback', 'Offline SQLite Sync', 'Provider / Bloc', 'Native Android Plugins'].map(s => (
-                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                  <span key={s} className={`px-2 py-1 rounded-[2px] border ${isLight ? 'bg-[#f1f5f9] text-[#0f172a] border-[#cbd5e1]' : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'}`}>
                     {s}
                   </span>
                 ))}
@@ -512,17 +560,17 @@ export default function Landing() {
             </div>
 
             {/* AI Integrations & Copilots */}
-            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
-              <div className="flex items-center gap-2 text-[#c084fc] font-mono text-sm font-bold">
+            <div className={`p-5 rounded-[4px] border space-y-3 ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-[#7c3aed] dark:text-[#c084fc] font-mono text-sm font-bold">
                 <Bot size={18} />
                 <span>AI & COPILOT WORKFLOWS</span>
               </div>
-              <p className="text-xs text-[#7a8899]">
+              <p className="text-xs text-[#64748b] dark:text-[#7a8899]">
                 Integrating LLMs (Grok, OpenAI GPT-4o, Claude) into workflow automation and intelligent code development.
               </p>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
                 {['xAI Grok 2', 'OpenAI GPT-4o', 'Claude 3.5 Sonnet', 'Prompt Engineering', 'Streaming APIs', 'Code Scaffolding', 'Document Intelligence'].map(s => (
-                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                  <span key={s} className={`px-2 py-1 rounded-[2px] border ${isLight ? 'bg-[#f1f5f9] text-[#0f172a] border-[#cbd5e1]' : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'}`}>
                     {s}
                   </span>
                 ))}
@@ -530,17 +578,17 @@ export default function Landing() {
             </div>
 
             {/* Frontend & Modern Web */}
-            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
-              <div className="flex items-center gap-2 text-[#fbbf24] font-mono text-sm font-bold">
+            <div className={`p-5 rounded-[4px] border space-y-3 ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-[#d97706] dark:text-[#fbbf24] font-mono text-sm font-bold">
                 <Code2 size={18} />
                 <span>FRONTEND & COMMAND UI</span>
               </div>
-              <p className="text-xs text-[#7a8899]">
+              <p className="text-xs text-[#64748b] dark:text-[#7a8899]">
                 Ultra-responsive, high-density developer consoles, telemetry charts, and mission-control portals.
               </p>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
                 {['React 18', 'TypeScript', 'Tailwind CSS', 'Vite', 'Lucide Icons', 'HTML5/Canvas', 'State Management'].map(s => (
-                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                  <span key={s} className={`px-2 py-1 rounded-[2px] border ${isLight ? 'bg-[#f1f5f9] text-[#0f172a] border-[#cbd5e1]' : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'}`}>
                     {s}
                   </span>
                 ))}
@@ -548,17 +596,17 @@ export default function Landing() {
             </div>
 
             {/* Enterprise Operations & Logistics */}
-            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
-              <div className="flex items-center gap-2 text-[#f43f5e] font-mono text-sm font-bold">
+            <div className={`p-5 rounded-[4px] border space-y-3 ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-[#e11d48] dark:text-[#f43f5e] font-mono text-sm font-bold">
                 <Shield size={18} />
                 <span>ENTERPRISE LOGISTICS</span>
               </div>
-              <p className="text-xs text-[#7a8899]">
+              <p className="text-xs text-[#64748b] dark:text-[#7a8899]">
                 Domain expertise in airport store operations, aviation calibration cycles, parts serialization, and material auditing.
               </p>
               <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
                 {['UUDS Airport Stores', 'Aviation MRO Standards', 'Batch Lifecycle Tracking', 'Warehouse Bin Allocation', 'Calibration Alerts', 'Operator Audit Logs'].map(s => (
-                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                  <span key={s} className={`px-2 py-1 rounded-[2px] border ${isLight ? 'bg-[#f1f5f9] text-[#0f172a] border-[#cbd5e1]' : 'bg-[#141820] text-[#dce4f0] border-[#252c3a]'}`}>
                     {s}
                   </span>
                 ))}
@@ -571,13 +619,13 @@ export default function Landing() {
       {/* ── TAB CONTENT 4: OPERATOR CONSOLE AUTH ────────────────────── */}
       {activeTab === 'auth' && (
         <section className="flex-1 max-w-xl mx-auto w-full p-4 sm:p-8 flex items-center justify-center">
-          <div className="w-full bg-[#101318] border border-[#252c3a] rounded-[4px] shadow-2xl overflow-hidden font-mono">
-            <div className="px-5 py-3.5 bg-[#0d1017] border-b border-[#1e2330] flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs text-[#00d4c8] font-bold">
+          <div className={`w-full rounded-[4px] border shadow-2xl overflow-hidden font-mono ${isLight ? 'bg-[#ffffff] border-[#cbd5e1]' : 'bg-[#101318] border-[#252c3a]'}`}>
+            <div className={`px-5 py-3.5 border-b flex items-center justify-between ${isLight ? 'bg-[#f8fafc] border-[#e2e8f0]' : 'bg-[#0d1017] border-[#1e2330]'}`}>
+              <div className="flex items-center gap-2 text-xs text-[#0284c7] dark:text-[#00d4c8] font-bold">
                 <Shield size={14} />
                 <span>OPERATOR CONSOLE ACCESS</span>
               </div>
-              <span className="text-[10px] text-[#10b981] font-bold">ENCRYPTED TLS 1.3</span>
+              <span className="text-[10px] text-[#059669] dark:text-[#10b981] font-bold">ENCRYPTED TLS 1.3</span>
             </div>
 
             <div className="p-6 space-y-4">
@@ -592,26 +640,30 @@ export default function Landing() {
               </button>
 
               <div className="flex items-center gap-2 pt-1">
-                <div className="flex-1 h-px bg-[#1e2330]" />
-                <span className="text-[9px] text-[#55637a] uppercase">OR LOGIN WITH USERNAME</span>
-                <div className="flex-1 h-px bg-[#1e2330]" />
+                <div className="flex-1 h-px bg-[#cbd5e1] dark:bg-[#1e2330]" />
+                <span className="text-[9.5px] text-[#64748b] dark:text-[#55637a] uppercase font-bold">OR LOGIN WITH USERNAME</span>
+                <div className="flex-1 h-px bg-[#cbd5e1] dark:bg-[#1e2330]" />
               </div>
 
               <form onSubmit={handleLogin} className="space-y-3 text-xs">
                 <div>
-                  <label className="block text-[#7a8899] text-[10px] uppercase font-bold mb-1">
+                  <label className="block text-[#475569] dark:text-[#7a8899] text-[10px] uppercase font-bold mb-1">
                     OPERATOR ID / USERNAME
                   </label>
                   <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-[#141820] text-xs text-[#dce4f0] px-3 py-2 border border-[#252c3a] focus:border-[#00d4c8] outline-none rounded-[2px]"
+                    className={`w-full text-xs px-3 py-2 border outline-none rounded-[2px] ${
+                      isLight
+                        ? 'bg-[#f8fafc] text-[#0f172a] border-[#cbd5e1] focus:border-[#0284c7]'
+                        : 'bg-[#141820] text-[#dce4f0] border-[#252c3a] focus:border-[#00d4c8]'
+                    }`}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#7a8899] text-[10px] uppercase font-bold mb-1">
+                  <label className="block text-[#475569] dark:text-[#7a8899] text-[10px] uppercase font-bold mb-1">
                     ACCESS KEY / PASSWORD
                   </label>
                   <div className="relative">
@@ -619,12 +671,16 @@ export default function Landing() {
                       type={showPass ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-[#141820] text-xs text-[#dce4f0] px-3 py-2 pr-10 border border-[#252c3a] focus:border-[#00d4c8] outline-none rounded-[2px]"
+                      className={`w-full text-xs px-3 py-2 pr-10 border outline-none rounded-[2px] ${
+                        isLight
+                          ? 'bg-[#f8fafc] text-[#0f172a] border-[#cbd5e1] focus:border-[#0284c7]'
+                          : 'bg-[#141820] text-[#dce4f0] border-[#252c3a] focus:border-[#00d4c8]'
+                      }`}
                     />
                     <button
                       type="button"
                       onClick={() => setShowPass(!showPass)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#55637a] hover:text-[#dce4f0]"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748b] hover:text-[#0f172a] dark:text-[#55637a] dark:hover:text-[#dce4f0]"
                     >
                       {showPass ? <EyeOff size={13} /> : <Eye size={13} />}
                     </button>
@@ -634,19 +690,19 @@ export default function Landing() {
                 <button
                   type="submit"
                   disabled={authLoading}
-                  className="w-full py-2.5 bg-[#182232] hover:bg-[#202c40] text-[#00d4c8] border border-[#00d4c850] font-bold text-xs rounded-[2px] flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-2.5 bg-[#0284c7] hover:bg-[#0369a1] dark:bg-[#182232] dark:hover:bg-[#202c40] text-white dark:text-[#00d4c8] border border-transparent dark:border-[#00d4c850] font-bold text-xs rounded-[2px] flex items-center justify-center gap-2 cursor-pointer transition-colors"
                 >
                   {authLoading ? 'AUTHENTICATING...' : 'AUTHENTICATE & ENTER'}
                 </button>
               </form>
 
-              <div className="p-2.5 bg-[#0a0c10] border border-[#1e2330] rounded-[2px] text-[10px] text-[#7a8899] space-y-1">
-                <div className="flex items-center gap-1.5 text-[#00d4c8] font-bold">
+              <div className={`p-2.5 rounded-[2px] text-[10px] space-y-1 border ${isLight ? 'bg-[#f1f5f9] text-[#334155] border-[#cbd5e1]' : 'bg-[#0a0c10] text-[#7a8899] border-[#1e2330]'}`}>
+                <div className="flex items-center gap-1.5 text-[#0284c7] dark:text-[#00d4c8] font-bold">
                   <KeyRound size={11} /> PRE-CONFIGURED CREDENTIALS:
                 </div>
                 <div className="flex justify-between">
-                  <span>User: <code className="text-[#dce4f0]">khurram.munir</code></span>
-                  <span>Pass: <code className="text-[#dce4f0]">devhub2026</code></span>
+                  <span>User: <code className="text-[#0f172a] dark:text-[#dce4f0] font-bold">{username}</code></span>
+                  <span>Pass: <code className="text-[#0f172a] dark:text-[#dce4f0] font-bold">{password}</code></span>
                 </div>
               </div>
             </div>
@@ -661,16 +717,16 @@ export default function Landing() {
         }`}
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-[#7a8899]">
-            <span className="font-bold text-[#dce4f0]">Khurram Munir Basra</span>
+          <div className="flex items-center gap-2 text-[#64748b] dark:text-[#7a8899]">
+            <span className="font-bold text-[#0f172a] dark:text-[#dce4f0]">Khurram Munir Basra</span>
             <span>•</span>
             <span>Lead Full Stack Architect & Systems Engineer</span>
           </div>
 
-          <div className="flex items-center gap-4 text-[#55637a] text-[11px]">
+          <div className="flex items-center gap-4 text-[#64748b] dark:text-[#55637a] text-[11px]">
             <span>NODE: DXB_STORES_PRODUCTION</span>
             <span>BUILD: v2.4.0 PRO</span>
-            <span className="text-[#10b981] font-bold">100% OPERATIONAL</span>
+            <span className="text-[#059669] dark:text-[#10b981] font-bold">100% OPERATIONAL</span>
           </div>
         </div>
       </footer>
