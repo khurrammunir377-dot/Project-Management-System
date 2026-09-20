@@ -14,6 +14,7 @@ import {
   ShieldAlert,
   ChevronLeft,
   ChevronRight,
+  Bot,
 } from 'lucide-react';
 import DevHubLogo from '../ui/DevHubLogo';
 import { useDevHub } from '@/context/DevHubContext';
@@ -49,16 +50,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const activeVisitorsCount = visitors.filter((v) => v.status === 'Active').length;
 
   const navItems: NavItemConfig[] = [
-    { label: 'Dashboard',   path: '/dashboard',   icon: LayoutDashboard, iconColor: '#00d4c8' },
-    { label: 'Projects',    path: '/projects',    icon: FolderGit2,      iconColor: '#38bdf8', badge: projects.length.toString(), badgeColor: '#38bdf8' },
-    { label: 'Ideas',       path: '/ideas',       icon: Lightbulb,       iconColor: '#c084fc' },
-    { label: 'Tasks',       path: '/tasks',       icon: CheckSquare,     iconColor: '#fbbf24', badge: openTasksCount.toString(),  badgeColor: '#fbbf24' },
-    { label: 'Bugs',        path: '/bugs',        icon: Bug,             iconColor: '#f87171', badge: openBugsCount.toString(),   badgeColor: '#f87171' },
-    { label: 'Suggestions', path: '/suggestions', icon: MessageSquare,   iconColor: '#34d399' },
-    { label: 'Releases',    path: '/releases',    icon: Tag,             iconColor: '#818cf8' },
-    { label: 'Team',        path: '/team',        icon: Users,           iconColor: '#fb923c', badge: teamMembers.length.toString(), badgeColor: '#fb923c' },
-    { label: 'Activity',    path: '/activity',    icon: Activity,        iconColor: '#f43f5e' },
-    { label: 'Admin Panel', path: '/admin',       icon: ShieldAlert,     iconColor: '#a3e635', badge: `${activeVisitorsCount} live`, badgeColor: '#a3e635' },
+    { label: 'Dashboard',     path: '/dashboard',   icon: LayoutDashboard, iconColor: '#00d4c8' },
+    { label: 'AI Dev Studio', path: '/ai-studio',   icon: Bot,             iconColor: '#a855f7', badge: 'COPILOT', badgeColor: '#a855f7' },
+    { label: 'Projects',      path: '/projects',    icon: FolderGit2,      iconColor: '#38bdf8', badge: projects.length.toString(), badgeColor: '#38bdf8' },
+    { label: 'Ideas',         path: '/ideas',       icon: Lightbulb,       iconColor: '#c084fc' },
+    { label: 'Tasks',         path: '/tasks',       icon: CheckSquare,     iconColor: '#fbbf24', badge: openTasksCount.toString(),  badgeColor: '#fbbf24' },
+    { label: 'Bugs',          path: '/bugs',        icon: Bug,             iconColor: '#f87171', badge: openBugsCount.toString(),   badgeColor: '#f87171' },
+    { label: 'Suggestions',   path: '/suggestions', icon: MessageSquare,   iconColor: '#34d399' },
+    { label: 'Releases',      path: '/releases',    icon: Tag,             iconColor: '#818cf8' },
+    { label: 'Team',          path: '/team',        icon: Users,           iconColor: '#fb923c', badge: teamMembers.length.toString(), badgeColor: '#fb923c' },
+    { label: 'Activity',      path: '/activity',    icon: Activity,        iconColor: '#f43f5e' },
+    { label: 'Admin Panel',   path: '/admin',       icon: ShieldAlert,     iconColor: '#a3e635', badge: `${activeVisitorsCount} live`, badgeColor: '#a3e635' },
   ];
 
   return (

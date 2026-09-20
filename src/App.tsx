@@ -13,6 +13,7 @@ import Releases       from '@/pages/Releases';
 import Team           from '@/pages/Team';
 import Activity       from '@/pages/Activity';
 import Admin          from '@/pages/Admin';
+import AiStudio       from '@/pages/AiStudio';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           {/* Protected: main app shell */}
           <Route element={<AppShell />}>
             <Route path="/dashboard"            element={<Dashboard />} />
+            <Route path="/ai-studio"            element={<AiStudio />} />
             <Route path="/projects"             element={<Projects />} />
             <Route path="/projects/:id"         element={<ProjectDetail />} />
             <Route path="/tasks"                element={<Tasks />} />

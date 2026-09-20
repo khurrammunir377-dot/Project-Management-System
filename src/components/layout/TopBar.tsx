@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Plus, Bell, Command, Menu, ChevronDown, Check, ShieldAlert, FolderGit2 } from 'lucide-react';
+import { Search, Plus, Bell, Command, Menu, ChevronDown, Check, ShieldAlert, FolderGit2, Bot } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDevHub } from '@/context/DevHubContext';
 import ThemeSwitcher from '../ui/ThemeSwitcher';
@@ -284,6 +284,17 @@ export const TopBar: React.FC<TopBarProps> = ({ onToggleMobile }) => {
 
       {/* ── RIGHT: Single Master Theme Switcher, Quick Actions, Profile ── */}
       <div className="flex items-center gap-2">
+        {/* AI Dev Studio Quick Action */}
+        <button
+          type="button"
+          onClick={() => navigate('/ai-studio')}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#a855f715] hover:bg-[#a855f725] border border-[#a855f750] text-[#c084fc] rounded-[2px] font-mono text-xs font-semibold tracking-wide transition-all shadow-[0_0_8px_rgba(168,85,247,0.15)]"
+          title="Open AI Development Studio (Grok / GPT-4o)"
+        >
+          <Bot size={14} />
+          <span className="hidden md:inline">AI STUDIO</span>
+        </button>
+
         {/* Single Master Theme Switcher (All Light/Dark & Engineering Palettes) */}
         <ThemeSwitcher />
 

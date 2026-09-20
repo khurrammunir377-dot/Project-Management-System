@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Terminal, Shield, Activity, ChevronRight, Eye, EyeOff, Zap,
-  UserCheck, KeyRound, Server, Cpu, Database, Wifi, CheckCircle2,
-  Lock, RefreshCw, Layers
+  Code2, Server, Database, Smartphone, Bot, Cpu, Zap, Shield,
+  ExternalLink, Mail, Phone, MapPin, Github, Linkedin, ChevronRight,
+  Sparkles, Layers, CheckCircle2, ArrowUpRight, Terminal, Globe,
+  Activity, Star, UserCheck, Eye, EyeOff, Lock, RefreshCw, KeyRound,
+  FolderGit2
 } from 'lucide-react';
 import DevHubLogo from '@/components/ui/DevHubLogo';
 import ThemeSwitcher from '@/components/ui/ThemeSwitcher';
@@ -11,16 +13,17 @@ import { useDevHub } from '@/context/DevHubContext';
 
 export default function Landing() {
   const navigate = useNavigate();
-  const { projects, bugs, tasks, teamMembers } = useDevHub();
+  const { projects, bugs, tasks, teamMembers, theme } = useDevHub();
+  const isLight = theme === 'light-pro';
+
+  // State
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [searchFilter, setSearchFilter] = useState('');
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'skills' | 'ai-copilot' | 'auth'>('portfolio');
   const [username, setUsername] = useState('khurram.munir');
   const [password, setPassword] = useState('devhub2026');
-  const [selectedRole, setSelectedRole] = useState('Khurram Munir (Lead Architect)');
   const [showPass, setShowPass] = useState(false);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [bootDone, setBootDone] = useState(false);
-  const [bootLines, setBootLines] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<'featured' | 'terminal' | 'health'>('featured');
+  const [authLoading, setAuthLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Real-time clock
@@ -29,541 +32,648 @@ export default function Landing() {
     return () => clearInterval(timer);
   }, []);
 
-  // System stats calculated from live context
-  const systemStats = [
-    { label: 'TOTAL PROJECTS', value: projects.length.toString(), color: '#00d4c8' },
-    { label: 'IN PRODUCTION',  value: projects.filter(p => p.status === 'Production').length.toString(), color: '#10b981' },
-    { label: 'TESTING / QA',   value: projects.filter(p => p.status === 'Testing').length.toString(), color: '#f59e0b' },
-    { label: 'OPEN DEFECTS',   value: bugs.filter(b => b.status === 'Open' || b.status === 'In Progress').length.toString(), color: '#ef4444' },
-    { label: 'ACTIVE OPERATORS', value: teamMembers.length.toString(), color: '#38bdf8' },
-    { label: 'SYSTEM HEALTH',  value: '99.98%', color: '#10b981' },
-  ];
+  // System statistics
+  const totalProjects = projects.length;
+  const productionProjects = projects.filter(p => p.status === 'Production').length;
+  const uudsProjects = projects.filter(p => p.tags.includes('uuds') || p.tags.includes('dxb-stores')).length;
 
-  // Key Enterprise Systems Showcase
-  const featuredSystems = projects.slice(0, 6);
+  // Filter projects for portfolio showcase
+  const filteredProjects = projects.filter((p) => {
+    const matchesCategory =
+      selectedCategory === 'ALL' ||
+      (selectedCategory === 'UUDS' && (p.tags.includes('uuds') || p.tags.includes('dxb-stores'))) ||
+      (selectedCategory === 'DJANGO' && p.stack.includes('Django')) ||
+      (selectedCategory === 'FLUTTER' && (p.stack.includes('Flutter') || p.type.includes('Mobile'))) ||
+      (selectedCategory === 'REACT' && (p.stack.includes('React') || p.stack.includes('TypeScript') || p.stack.includes('Next.js'))) ||
+      (selectedCategory === 'PRODUCTION' && p.status === 'Production');
 
-  // Boot sequence animation
-  const BOOT_SEQUENCE = [
-    '> Initializing KMB DevHub PRO v2.4.0 Desktop Runtime Engine...',
-    `> Mounting project catalog (${projects.length} repositories loaded)... OK`,
-    '> Linking UUDS DXB Stores production cluster & database sockets... OK',
-    '> Running core latency diagnostics... 4ms (Optimal)',
-    '> Loading operator credentials & biometric security hashes... OK',
-    '> All cluster nodes operational. Ready for console access.',
-  ];
+    const matchesSearch =
+      searchFilter === '' ||
+      p.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      p.shortCode.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      p.description.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      p.stack.some(s => s.toLowerCase().includes(searchFilter.toLowerCase()));
 
-  useEffect(() => {
-    let i = 0;
-    const next = () => {
-      if (i < BOOT_SEQUENCE.length) {
-        setBootLines((prev) => [...prev, BOOT_SEQUENCE[i]]);
-        i++;
-        setTimeout(next, 180 + Math.random() * 60);
-      } else {
-        setTimeout(() => setBootDone(true), 250);
-      }
-    };
-    setTimeout(next, 150);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return matchesCategory && matchesSearch;
+  });
 
   const handleLogin = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    setError('');
-    setLoading(true);
+    setAuthLoading(true);
     setTimeout(() => {
       navigate('/dashboard');
-    }, 350);
-  };
-
-  const handleQuickBypass = () => {
-    navigate('/dashboard');
-  };
-
-  const selectOperatorProfile = (name: string, user: string, pass: string) => {
-    setSelectedRole(name);
-    setUsername(user);
-    setPassword(pass);
-  };
-
-  const handleTerminalCommand = (cmd: string) => {
-    if (cmd === 'clear') {
-      setBootLines([]);
-      return;
-    }
-    if (cmd === 'status') {
-      setBootLines(prev => [...prev, `$ system:status`, `> CLUSTER: 31 Projects Active | 14 Production | Latency: 4ms | Status: 100% OK`]);
-      return;
-    }
-    if (cmd === 'projects') {
-      setBootLines(prev => [...prev, `$ projects:list`, `> 1. Tools Mgt (Django) | 2. Material Mgt (Django) | 3. Parts Inspection (Flutter)`]);
-      return;
-    }
-    if (cmd === 'security') {
-      setBootLines(prev => [...prev, `$ security:check`, `> TLS 1.3 Active | SuperAdmin Token Verified | Session: SEC_DXB_2026`]);
-      return;
-    }
+    }, 300);
   };
 
   return (
     <div
-      className="min-h-screen w-full flex flex-col bg-[#0a0c0f] text-[#dce4f0] select-none transition-colors duration-150 overflow-y-auto lg:overflow-hidden"
+      className={`min-h-screen w-full flex flex-col select-none transition-colors duration-200 ${
+        isLight ? 'bg-[#f8fafc] text-[#0f172a]' : 'bg-[#0a0c0f] text-[#dce4f0]'
+      }`}
       style={{ fontFamily: "'Calibri', 'Carlito', 'Candara', 'Segoe UI', Arial, sans-serif" }}
     >
-      {/* Scanline CRT overlay */}
-      <div className="scanline" />
-
-      {/* ── TOP MISSION CONTROL HEADER BAR ──────────────────────────── */}
-      <header className="w-full bg-[#0d1017] border-b border-[#1e2330] px-4 py-2.5 flex items-center justify-between z-20 flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <DevHubLogo size="sm" />
-          <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-[#1e2330]">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#10b981]"></span>
-            </span>
-            <span className="font-mono text-[11px] font-bold text-[#10b981] tracking-wider uppercase">
-              CORE CLUSTER ONLINE
-            </span>
-            <span className="font-mono text-[10px] text-[#55637a] tracking-wider">
-              • DXB-PRIMARY (4ms)
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2.5">
-          {/* Real-time Clock */}
-          <div className="hidden md:flex items-center gap-2 px-2.5 py-1 bg-[#101318] border border-[#1e2330] rounded-[2px] font-mono text-[11px]">
-            <span className="text-[#00d4c8] font-bold">
-              {currentTime.toLocaleTimeString('en-GB', { hour12: false })}
-            </span>
-            <span className="text-[#55637a]">
-              {currentTime.toLocaleDateString('en-GB')}
-            </span>
+      {/* ── HEADER NAVBAR ────────────────────────────────────────────── */}
+      <header
+        className={`sticky top-0 z-50 w-full px-4 sm:px-8 py-3 border-b backdrop-blur-md transition-colors ${
+          isLight ? 'bg-[#ffffff]/90 border-[#e2e8f0]' : 'bg-[#0d1017]/95 border-[#1e2330]'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Logo & Name */}
+          <div className="flex items-center gap-3">
+            <DevHubLogo size="md" />
+            <div className="hidden sm:block pl-3 border-l border-[#1e2330]">
+              <div className="font-bold text-sm tracking-tight text-[#f1f5f9] flex items-center gap-1.5">
+                <span>Khurram Munir Basra</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.2 bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c840] rounded-[2px]">
+                  PORTFOLIO & COMMAND CENTER
+                </span>
+              </div>
+              <div className="text-[10.5px] text-[#7a8899] font-mono">
+                Lead Architect • Full Stack & Enterprise Engineer
+              </div>
+            </div>
           </div>
 
-          {/* Theme Switcher Toggle */}
-          <ThemeSwitcher />
+          {/* Nav Links */}
+          <div className="hidden md:flex items-center gap-2 font-mono text-xs">
+            <button
+              onClick={() => setActiveTab('portfolio')}
+              className={`px-3 py-1.5 rounded-[3px] transition-colors ${
+                activeTab === 'portfolio'
+                  ? 'bg-[#00d4c815] text-[#00d4c8] font-bold border border-[#00d4c850]'
+                  : 'text-[#7a8899] hover:text-[#dce4f0]'
+              }`}
+            >
+              PROJECTS ({totalProjects})
+            </button>
+            <button
+              onClick={() => setActiveTab('skills')}
+              className={`px-3 py-1.5 rounded-[3px] transition-colors ${
+                activeTab === 'skills'
+                  ? 'bg-[#00d4c815] text-[#00d4c8] font-bold border border-[#00d4c850]'
+                  : 'text-[#7a8899] hover:text-[#dce4f0]'
+              }`}
+            >
+              ARCHITECTURE & SKILLS
+            </button>
+            <button
+              onClick={() => navigate('/ai-studio')}
+              className="px-3 py-1.5 rounded-[3px] bg-[#a855f715] text-[#c084fc] hover:bg-[#a855f725] border border-[#a855f750] font-bold transition-all flex items-center gap-1.5"
+            >
+              <Bot size={13} />
+              <span>AI DEV STUDIO</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('auth')}
+              className={`px-3 py-1.5 rounded-[3px] transition-colors ${
+                activeTab === 'auth'
+                  ? 'bg-[#00d4c815] text-[#00d4c8] font-bold border border-[#00d4c850]'
+                  : 'text-[#7a8899] hover:text-[#dce4f0]'
+              }`}
+            >
+              OPERATOR LOGIN
+            </button>
+          </div>
 
-          {/* 1-Click Launch Header Action */}
-          <button
-            type="button"
-            onClick={handleQuickBypass}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-[#00d4c8] hover:bg-[#00e5d8] text-black font-mono text-xs font-black rounded-[3px] transition-all shadow-[0_0_12px_rgba(0,212,200,0.3)] active:scale-95"
-            title="Instant 1-Click Dashboard Access"
-          >
-            <Zap size={13} className="fill-black" />
-            <span className="hidden sm:inline">1-CLICK START</span>
-            <span className="sm:hidden">START</span>
-          </button>
+          {/* Right Header Actions */}
+          <div className="flex items-center gap-2.5">
+            <ThemeSwitcher />
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-[#00d4c8] hover:bg-[#00e5d8] text-black font-mono text-xs font-black rounded-[3px] transition-all shadow-[0_0_14px_rgba(0,212,200,0.35)] active:scale-95 cursor-pointer"
+            >
+              <Zap size={14} className="fill-black" />
+              <span>ENTER WORKSPACE</span>
+              <ChevronRight size={14} />
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* ── MAIN WORKSPACE VIEWPORT ─────────────────────────────────── */}
-      <div className="flex-1 flex flex-col lg:flex-row w-full overflow-hidden">
-        {/* ── LEFT PANEL: Enterprise Telemetry & Systems Deck ──────── */}
-        <div
-          className="w-full lg:w-[560px] xl:w-[620px] flex-shrink-0 flex flex-col border-b lg:border-b-0 lg:border-r border-[#1e2330] bg-[#0d1017] p-4 sm:p-6 lg:overflow-y-auto scrollable relative"
-        >
-          {/* Subtle Grid Texture */}
-          <div className="absolute inset-0 bg-grid opacity-50 pointer-events-none" />
+      {/* ── HERO PROFILE & EXECUTIVE SUMMARY ────────────────────────── */}
+      <section
+        className={`w-full py-8 sm:py-12 px-4 sm:px-8 border-b relative overflow-hidden ${
+          isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#0d1017] border-[#1e2330]'
+        }`}
+      >
+        <div className="absolute inset-0 bg-grid opacity-40 pointer-events-none" />
 
-          {/* Brand & Mission Banner */}
-          <div className="relative z-10 mb-5">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-mono text-[10px] uppercase font-bold text-[#00d4c8] bg-[#00d4c815] px-2 py-0.5 border border-[#00d4c840] rounded-[2px] tracking-wider">
-                ENTERPRISE DEVELOPER COMMAND CENTER
-              </span>
-              <span className="font-mono text-[10px] text-[#55637a]">BUILD v2.4.0 PRO</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-[#f1f5f9] tracking-tight">
-              UUDS DXB Stores & Operations Console
-            </h1>
-            <p className="text-xs text-[#7a8899] mt-1 leading-relaxed">
-              Unified control center managing 31 production apps, real-time inventory systems, Flutter mobile inspection tools, and developer telemetry.
-            </p>
-          </div>
-
-          {/* Metrics Matrix Strip */}
-          <div className="relative z-10 mb-5">
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1.5 p-1.5 bg-[#101318] border border-[#1e2330] rounded-[3px]">
-              {systemStats.map((st) => (
-                <div key={st.label} className="p-2 bg-[#141820] rounded-[2px] text-center border border-[#1e2535]">
-                  <div className="font-mono text-base font-bold" style={{ color: st.color }}>
-                    {st.value}
-                  </div>
-                  <div className="font-mono text-[8px] text-[#55637a] tracking-wider uppercase truncate">
-                    {st.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Left Deck Interactive Tabs */}
-          <div className="relative z-10 flex items-center gap-1 mb-3 border-b border-[#1e2330] pb-2 font-mono text-xs">
-            <button
-              onClick={() => setActiveTab('featured')}
-              className={`px-2.5 py-1 rounded-[2px] uppercase text-[11px] font-bold transition-colors flex items-center gap-1.5 ${
-                activeTab === 'featured'
-                  ? 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850]'
-                  : 'text-[#64748b] hover:text-[#dce4f0] border border-transparent'
-              }`}
-            >
-              <Layers size={12} /> FEATURED REPOSITORIES ({featuredSystems.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('terminal')}
-              className={`px-2.5 py-1 rounded-[2px] uppercase text-[11px] font-bold transition-colors flex items-center gap-1.5 ${
-                activeTab === 'terminal'
-                  ? 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850]'
-                  : 'text-[#64748b] hover:text-[#dce4f0] border border-transparent'
-              }`}
-            >
-              <Terminal size={12} /> LIVE TERMINAL
-            </button>
-            <button
-              onClick={() => setActiveTab('health')}
-              className={`px-2.5 py-1 rounded-[2px] uppercase text-[11px] font-bold transition-colors flex items-center gap-1.5 ${
-                activeTab === 'health'
-                  ? 'bg-[#00d4c815] text-[#00d4c8] border border-[#00d4c850]'
-                  : 'text-[#64748b] hover:text-[#dce4f0] border border-transparent'
-              }`}
-            >
-              <Activity size={12} /> CLUSTER HEALTH
-            </button>
-          </div>
-
-          {/* Tab Content 1: Featured Systems */}
-          {activeTab === 'featured' && (
-            <div className="relative z-10 space-y-2 flex-1">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {featuredSystems.map((proj) => (
-                  <div
-                    key={proj.id}
-                    onClick={handleQuickBypass}
-                    className="p-2.5 bg-[#101318] hover:bg-[#141824] border border-[#1e2330] hover:border-[#00d4c860] rounded-[3px] transition-all cursor-pointer group shadow-sm"
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-mono text-[10px] font-bold text-[#00d4c8] bg-[#00d4c810] px-1.5 py-0.5 rounded-[2px] border border-[#00d4c830]">
-                        {proj.shortCode}
-                      </span>
-                      <span className="font-mono text-[9.5px] px-1.5 py-0.2 rounded-[2px] bg-[#10b98115] text-[#10b981] border border-[#10b98140] font-bold">
-                        {proj.status}
-                      </span>
-                    </div>
-                    <div className="font-semibold text-xs text-[#dce4f0] group-hover:text-[#00d4c8] truncate transition-colors">
-                      {proj.name}
-                    </div>
-                    <div className="text-[10.5px] text-[#55637a] truncate mt-0.5">
-                      {proj.description}
-                    </div>
-                    <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-[#181d28] font-mono text-[9px] text-[#7a8899]">
-                      <span className="truncate max-w-[120px]">{proj.stack.slice(0, 2).join(' • ')}</span>
-                      <span className="text-[#38bdf8] font-bold">{proj.version}</span>
-                    </div>
-                  </div>
-                ))}
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Bio & Value Proposition */}
+            <div className="lg:col-span-8 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00d4c815] border border-[#00d4c840] rounded-[3px] font-mono text-xs text-[#00d4c8] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+                <span>AVAILABLE FOR ARCHITECTURE & ENTERPRISE ENGINEERING</span>
               </div>
-            </div>
-          )}
 
-          {/* Tab Content 2: Live Terminal */}
-          {activeTab === 'terminal' && (
-            <div className="relative z-10 flex-1 flex flex-col bg-[#080a0d] border border-[#1e2330] rounded-[3px] p-3 font-mono text-xs">
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#1e2330]">
-                <div className="flex items-center gap-1.5 text-[#00d4c8] text-[10px] font-bold">
-                  <Terminal size={12} />
-                  <span>RUNTIME CONSOLE STREAM</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => handleTerminalCommand('status')}
-                    className="px-1.5 py-0.5 bg-[#141820] hover:bg-[#1a2130] text-[#7a8899] hover:text-[#00d4c8] rounded-[2px] text-[9px] border border-[#252c3a]"
-                  >
-                    status
-                  </button>
-                  <button
-                    onClick={() => handleTerminalCommand('projects')}
-                    className="px-1.5 py-0.5 bg-[#141820] hover:bg-[#1a2130] text-[#7a8899] hover:text-[#00d4c8] rounded-[2px] text-[9px] border border-[#252c3a]"
-                  >
-                    projects
-                  </button>
-                  <button
-                    onClick={() => handleTerminalCommand('security')}
-                    className="px-1.5 py-0.5 bg-[#141820] hover:bg-[#1a2130] text-[#7a8899] hover:text-[#00d4c8] rounded-[2px] text-[9px] border border-[#252c3a]"
-                  >
-                    security
-                  </button>
-                  <button
-                    onClick={() => handleTerminalCommand('clear')}
-                    className="px-1.5 py-0.5 bg-[#141820] hover:bg-[#1a2130] text-[#7a8899] hover:text-[#ef4444] rounded-[2px] text-[9px] border border-[#252c3a]"
-                  >
-                    clear
-                  </button>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#f8fafc]">
+                Khurram Munir Basra
+              </h1>
+
+              <div className="text-sm sm:text-base text-[#00d4c8] font-mono font-bold flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span>Principal Full-Stack Architect</span>
+                <span>•</span>
+                <span>Python / Django & PostgreSQL</span>
+                <span>•</span>
+                <span>Flutter Mobile</span>
+                <span>•</span>
+                <span>AI Engineering</span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-[#94a3b8] leading-relaxed max-w-3xl">
+                Senior systems architect with extensive track record building mission-critical enterprise platforms, including high-scale inventory and material management systems for <strong className="text-[#f1f5f9]">UUDS Dubai Airport Stores</strong>, aviation MRO operations, cross-platform mobile apps, and custom AI copilot integrations.
+              </p>
+
+              {/* Contact / Connect Badges */}
+              <div className="flex flex-wrap items-center gap-3 pt-2 font-mono text-xs text-[#7a8899]">
+                <a
+                  href="mailto:khurrammunir377@gmail.com"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border border-[#252c3a] rounded-[3px] transition-colors"
+                >
+                  <Mail size={13} className="text-[#00d4c8]" />
+                  <span>khurrammunir377@gmail.com</span>
+                </a>
+                <a
+                  href="https://github.com/khurrammunir377-dot"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border border-[#252c3a] rounded-[3px] transition-colors"
+                >
+                  <Github size={13} className="text-[#38bdf8]" />
+                  <span>github.com/khurrammunir377-dot</span>
+                </a>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[3px]">
+                  <MapPin size={13} className="text-[#f59e0b]" />
+                  <span>Dubai, United Arab Emirates</span>
                 </div>
               </div>
 
-              <div className="space-y-1 text-[10.5px] max-h-48 overflow-y-auto scrollable">
-                {bootLines.map((line, idx) => (
-                  <div key={idx} className={idx === bootLines.length - 1 ? 'text-[#00d4c8]' : 'text-[#7a8899]'}>
-                    {line}
-                  </div>
-                ))}
-                {bootDone && (
-                  <div className="text-[#10b981] font-bold flex items-center gap-1 mt-1">
-                    <CheckCircle2 size={12} />
-                    <span>SYSTEM ONLINE & READY</span>
-                    <span className="animate-pulse text-[#00d4c8]">█</span>
-                  </div>
-                )}
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3 pt-3 font-mono">
+                <button
+                  type="button"
+                  onClick={() => navigate('/dashboard')}
+                  className="px-5 py-2.5 bg-[#00d4c8] hover:bg-[#00e5d8] text-black font-black text-xs rounded-[3px] flex items-center gap-2 transition-all shadow-[0_0_18px_rgba(0,212,200,0.4)] active:scale-95 cursor-pointer"
+                >
+                  <Zap size={15} className="fill-black" />
+                  <span>1-CLICK LAUNCH WORKSPACE</span>
+                  <ChevronRight size={15} />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => navigate('/ai-studio')}
+                  className="px-4 py-2.5 bg-[#a855f715] hover:bg-[#a855f730] text-[#c084fc] border border-[#a855f760] font-bold text-xs rounded-[3px] flex items-center gap-2 transition-all"
+                >
+                  <Bot size={15} />
+                  <span>OPEN AI DEV STUDIO</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('portfolio')}
+                  className="px-4 py-2.5 bg-[#141820] hover:bg-[#1a2130] text-[#dce4f0] hover:text-[#00d4c8] border border-[#252c3a] font-bold text-xs rounded-[3px] flex items-center gap-2 transition-all"
+                >
+                  <FolderGit2 size={15} />
+                  <span>VIEW 31 PORTFOLIO PROJECTS</span>
+                </button>
               </div>
             </div>
-          )}
 
-          {/* Tab Content 3: Cluster Health */}
-          {activeTab === 'health' && (
-            <div className="relative z-10 flex-1 space-y-3 bg-[#101318] border border-[#1e2330] rounded-[3px] p-3.5 font-mono text-xs">
-              <div className="flex items-center justify-between pb-2 border-b border-[#1e2330]">
-                <span className="text-[#00d4c8] font-bold text-[11px] flex items-center gap-1.5">
-                  <Cpu size={13} /> RESOURCE UTILIZATION & TELEMETRY
-                </span>
-                <span className="text-[#10b981] text-[10px] font-bold">ALL SERVICES NOMINAL</span>
-              </div>
+            {/* Right KPI & Architecture Deck */}
+            <div className="lg:col-span-4 space-y-3">
+              <div className="p-4 bg-[#101318] border border-[#1e2330] rounded-[4px] shadow-lg space-y-3 font-mono">
+                <div className="flex items-center justify-between pb-2 border-b border-[#1e2330] text-xs">
+                  <span className="text-[#00d4c8] font-bold flex items-center gap-1.5">
+                    <Activity size={14} /> PRODUCTION BENCHMARKS
+                  </span>
+                  <span className="text-[#10b981] font-bold">100% RELIABILITY</span>
+                </div>
 
-              <div className="space-y-2.5">
-                <div>
-                  <div className="flex justify-between text-[10px] text-[#7a8899] mb-1">
-                    <span>CPU LOAD (8 CORES)</span>
-                    <span className="text-[#00d4c8] font-bold">14.2%</span>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
+                    <div className="text-2xl font-black text-[#00d4c8]">{totalProjects}</div>
+                    <div className="text-[9px] text-[#7a8899] uppercase">DELIVERED SYSTEMS</div>
                   </div>
-                  <div className="w-full h-1.5 bg-[#181d28] rounded-full overflow-hidden">
-                    <div className="h-full bg-[#00d4c8] w-[14.2%]" />
+                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
+                    <div className="text-2xl font-black text-[#10b981]">{productionProjects}</div>
+                    <div className="text-[9px] text-[#7a8899] uppercase">IN LIVE PRODUCTION</div>
+                  </div>
+                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
+                    <div className="text-2xl font-black text-[#38bdf8]">{uudsProjects}</div>
+                    <div className="text-[9px] text-[#7a8899] uppercase">UUDS AIRPORT APPS</div>
+                  </div>
+                  <div className="p-2.5 bg-[#141820] border border-[#1e2535] rounded-[2px] text-center">
+                    <div className="text-2xl font-black text-[#c084fc]">99.98%</div>
+                    <div className="text-[9px] text-[#7a8899] uppercase">SYSTEM UPTIME</div>
                   </div>
                 </div>
 
-                <div>
-                  <div className="flex justify-between text-[10px] text-[#7a8899] mb-1">
-                    <span>MEMORY ALLOCATED (32 GB)</span>
-                    <span className="text-[#38bdf8] font-bold">32.8% (10.5 GB)</span>
+                <div className="pt-2 border-t border-[#1e2330] text-[10px] text-[#7a8899] space-y-1">
+                  <div className="flex justify-between">
+                    <span>Key Client:</span>
+                    <strong className="text-[#dce4f0]">UUDS Airport Stores (DXB)</strong>
                   </div>
-                  <div className="w-full h-1.5 bg-[#181d28] rounded-full overflow-hidden">
-                    <div className="h-full bg-[#38bdf8] w-[32.8%]" />
+                  <div className="flex justify-between">
+                    <span>Primary Stack:</span>
+                    <strong className="text-[#00d4c8]">Django / Waitress / PostgreSQL</strong>
                   </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-[10px] text-[#7a8899] mb-1">
-                    <span>POSTGRESQL & REDIS CLUSTER POOL</span>
-                    <span className="text-[#10b981] font-bold">48 ACTIVE CONNECTIONS</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-[#181d28] rounded-full overflow-hidden">
-                    <div className="h-full bg-[#10b981] w-[45%]" />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-[10px] text-[#7a8899] mb-1">
-                    <span>LOCAL DISK NVMe STORAGE</span>
-                    <span className="text-[#f59e0b] font-bold">62.1% (1.2 TB / 2.0 TB)</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-[#181d28] rounded-full overflow-hidden">
-                    <div className="h-full bg-[#f59e0b] w-[62.1%]" />
+                  <div className="flex justify-between">
+                    <span>Mobile Platform:</span>
+                    <strong className="text-[#38bdf8]">Flutter / Dart Android Apps</strong>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
-
-          {/* Bottom Security Footer */}
-          <div className="relative z-10 mt-auto pt-4 flex items-center justify-between font-mono text-[9.5px] text-[#55637a] border-t border-[#1e2330]">
-            <div className="flex items-center gap-1.5">
-              <Shield size={11} className="text-[#10b981]" />
-              <span>TLS 1.3 ENCRYPTION ACTIVE</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Wifi size={11} className="text-[#00d4c8]" />
-              <span>PORT: 5173 • ON-PREMISE</span>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* ── RIGHT PANEL: Auth Terminal & Fast Access Launch Deck ── */}
-        <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 relative bg-[#0a0c0f]">
-          <div className="absolute inset-0 bg-dots opacity-20 pointer-events-none" />
+      {/* ── TAB SELECTOR RIBBON ─────────────────────────────────────── */}
+      <div
+        className={`sticky top-[57px] z-40 w-full px-4 sm:px-8 py-2.5 border-b font-mono text-xs ${
+          isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#0d1017] border-[#1e2330]'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto">
+          <div className="flex items-center gap-1.5 whitespace-nowrap">
+            <button
+              onClick={() => setActiveTab('portfolio')}
+              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 ${
+                activeTab === 'portfolio'
+                  ? 'bg-[#00d4c8] text-black shadow-sm'
+                  : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141820]'
+              }`}
+            >
+              <FolderGit2 size={13} />
+              <span>PORTFOLIO REPOSITORIES ({totalProjects})</span>
+            </button>
 
-          {/* Auth Deck Container */}
-          <div className="relative z-10 w-full max-w-md bg-[#101318] border border-[#252c3a] rounded-[4px] shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
-            {/* Card Top Title Bar */}
-            <div className="px-5 py-3.5 flex items-center justify-between border-b border-[#1e2330] bg-[#0d1017]">
-              <div className="flex items-center gap-2 font-mono text-xs text-[#dce4f0] font-bold">
-                <Shield size={14} className="text-[#00d4c8]" />
-                <span>OPERATOR CONSOLE AUTHENTICATION</span>
+            <button
+              onClick={() => setActiveTab('skills')}
+              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 ${
+                activeTab === 'skills'
+                  ? 'bg-[#00d4c8] text-black shadow-sm'
+                  : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141820]'
+              }`}
+            >
+              <Cpu size={13} />
+              <span>TECHNICAL STACK & ARCHITECTURE</span>
+            </button>
+
+            <button
+              onClick={() => navigate('/ai-studio')}
+              className="px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 bg-[#a855f715] text-[#c084fc] hover:bg-[#a855f725] border border-[#a855f750]"
+            >
+              <Bot size={13} />
+              <span>AI COPILOT STUDIO (GROK / GPT-4o)</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('auth')}
+              className={`px-3 py-1.5 rounded-[3px] font-bold uppercase transition-all flex items-center gap-1.5 ${
+                activeTab === 'auth'
+                  ? 'bg-[#00d4c8] text-black shadow-sm'
+                  : 'text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#141820]'
+              }`}
+            >
+              <Shield size={13} />
+              <span>CONSOLE LOGIN</span>
+            </button>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 text-[10.5px] text-[#55637a]">
+            <span>NODE: DXB_PORTFOLIO_PRO</span>
+            <span>•</span>
+            <span className="text-[#10b981] font-bold">ONLINE</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ── TAB CONTENT 1: PORTFOLIO SHOWCASE ───────────────────────── */}
+      {activeTab === 'portfolio' && (
+        <section className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8 space-y-6">
+          {/* Filter ribbon */}
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between font-mono text-xs">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {(['ALL', 'UUDS', 'PRODUCTION', 'DJANGO', 'FLUTTER', 'REACT'] as const).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1 rounded-[2px] font-bold uppercase transition-colors border ${
+                    selectedCategory === cat
+                      ? 'bg-[#00d4c815] border-[#00d4c8] text-[#00d4c8]'
+                      : 'bg-[#141820] border-[#252c3a] text-[#7a8899] hover:text-[#dce4f0]'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <div className="w-full sm:w-72">
+              <input
+                type="text"
+                value={searchFilter}
+                onChange={(e) => setSearchFilter(e.target.value)}
+                placeholder="Search 31 projects, tech stack, or SKU..."
+                className={`w-full px-3 py-1.5 text-xs font-mono rounded-[2px] border outline-none ${
+                  isLight
+                    ? 'bg-[#ffffff] border-[#cbd5e1] text-[#0f172a] focus:border-[#0284c7]'
+                    : 'bg-[#101318] border-[#252c3a] text-[#dce4f0] focus:border-[#00d4c8]'
+                }`}
+              />
+            </div>
+          </div>
+
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredProjects.map((proj) => (
+              <div
+                key={proj.id}
+                onClick={() => navigate(`/projects/${proj.id}`)}
+                className={`p-4 rounded-[3px] border transition-all cursor-pointer group shadow-sm flex flex-col justify-between ${
+                  isLight
+                    ? 'bg-[#ffffff] hover:bg-[#f8fafc] border-[#e2e8f0] hover:border-[#0284c7]'
+                    : 'bg-[#101318] hover:bg-[#141824] border-[#1e2330] hover:border-[#00d4c860]'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-xs font-bold text-[#00d4c8] bg-[#00d4c810] px-2 py-0.5 rounded-[2px] border border-[#00d4c830]">
+                      {proj.shortCode}
+                    </span>
+                    <span
+                      className={`font-mono text-[10px] px-2 py-0.5 rounded-[2px] font-bold ${
+                        proj.status === 'Production'
+                          ? 'bg-[#10b98115] text-[#10b981] border border-[#10b98140]'
+                          : proj.status === 'Testing'
+                          ? 'bg-[#f59e0b15] text-[#f59e0b] border border-[#f59e0b40]'
+                          : 'bg-[#3b82f615] text-[#3b82f6] border border-[#3b82f640]'
+                      }`}
+                    >
+                      {proj.status}
+                    </span>
+                  </div>
+
+                  <h3 className="font-bold text-sm text-[#f1f5f9] group-hover:text-[#00d4c8] transition-colors line-clamp-1">
+                    {proj.name}
+                  </h3>
+
+                  <p className="text-xs text-[#7a8899] mt-1.5 line-clamp-2 leading-relaxed">
+                    {proj.description}
+                  </p>
+                </div>
+
+                <div className="mt-4 pt-3 border-t border-[#1e2330] space-y-2">
+                  <div className="flex flex-wrap items-center gap-1 font-mono text-[9.5px]">
+                    {proj.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-1.5 py-0.2 bg-[#141820] text-[#94a3b8] border border-[#252f44] rounded-[2px]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between font-mono text-[10px] text-[#55637a] pt-1">
+                    <span className="text-[#38bdf8] font-bold">{proj.version}</span>
+                    <span className="group-hover:text-[#00d4c8] flex items-center gap-0.5 font-bold transition-colors">
+                      VIEW WORKSPACE <ArrowUpRight size={11} />
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ef4444] opacity-80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#f59e0b] opacity-80" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#10b981] opacity-80" />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── TAB CONTENT 2: SKILLS & ARCHITECTURE ────────────────────── */}
+      {activeTab === 'skills' && (
+        <section className="flex-1 max-w-7xl mx-auto w-full p-4 sm:p-8 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Backend Architecture */}
+            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
+              <div className="flex items-center gap-2 text-[#00d4c8] font-mono text-sm font-bold">
+                <Server size={18} />
+                <span>BACKEND ARCHITECTURE</span>
+              </div>
+              <p className="text-xs text-[#7a8899]">
+                High-throughput, asynchronous, and robust backend engineering with atomic transactional safety.
+              </p>
+              <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
+                {['Python 3.12', 'Django 5', 'Django REST Framework', 'Waitress WSGI', 'FastAPI', 'Celery', 'Redis', 'Gunicorn', 'WebSockets'].map(s => (
+                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                    {s}
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className="p-5 sm:p-6 space-y-4">
-              {/* ── MASTER 1-CLICK INSTANT START BUTTON ──────────────── */}
-              <div className="space-y-1.5">
-                <button
-                  type="button"
-                  onClick={handleQuickBypass}
-                  className="w-full py-3.5 px-4 bg-[#00d4c8] hover:bg-[#00e5d8] text-black font-mono font-black text-xs tracking-wider rounded-[3px] flex items-center justify-between transition-all shadow-[0_0_20px_rgba(0,212,200,0.4)] hover:shadow-[0_0_28px_rgba(0,212,200,0.6)] active:scale-[0.99] group cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-1 bg-black/10 rounded-[2px]">
-                      <Zap size={16} className="fill-black" />
-                    </div>
-                    <div className="text-left">
-                      <div className="leading-tight">1-CLICK INSTANT LAUNCH</div>
-                      <div className="text-[9.5px] opacity-80 font-normal tracking-normal">Directly open Command Dashboard</div>
-                    </div>
-                  </div>
-                  <ChevronRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
-                </button>
+            {/* Database & Data Integrity */}
+            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
+              <div className="flex items-center gap-2 text-[#10b981] font-mono text-sm font-bold">
+                <Database size={18} />
+                <span>DATABASE & RELIABILITY</span>
               </div>
-
-              {/* Quick Profile Selectors */}
-              <div>
-                <label className="block font-mono text-[10px] tracking-wider mb-1.5 text-[#7a8899] uppercase font-bold">
-                  QUICK OPERATOR SELECTOR:
-                </label>
-                <div className="grid grid-cols-2 gap-1.5 font-mono text-[10px]">
-                  <button
-                    type="button"
-                    onClick={() => selectOperatorProfile('Khurram Munir (Lead Architect)', 'khurram.munir', 'devhub2026')}
-                    className={`p-2 rounded-[2px] border text-left transition-all ${
-                      username === 'khurram.munir'
-                        ? 'bg-[#00d4c815] border-[#00d4c860] text-[#00d4c8] font-bold'
-                        : 'bg-[#141820] border-[#252c3a] text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#1a2130]'
-                    }`}
-                  >
-                    <div className="truncate">Khurram Munir</div>
-                    <div className="text-[8.5px] text-[#55637a]">Lead SuperAdmin</div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => selectOperatorProfile('UUDS Core Team', 'uuds.admin', 'uuds2026')}
-                    className={`p-2 rounded-[2px] border text-left transition-all ${
-                      username === 'uuds.admin'
-                        ? 'bg-[#00d4c815] border-[#00d4c860] text-[#00d4c8] font-bold'
-                        : 'bg-[#141820] border-[#252c3a] text-[#7a8899] hover:text-[#dce4f0] hover:bg-[#1a2130]'
-                    }`}
-                  >
-                    <div className="truncate">UUDS Store Ops</div>
-                    <div className="text-[8.5px] text-[#55637a]">Airport Ops Lead</div>
-                  </button>
-                </div>
+              <p className="text-xs text-[#7a8899]">
+                High-volume schema design, indexing, partitioning, ACID compliance, and zero-downtime migrations.
+              </p>
+              <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
+                {['PostgreSQL 16', 'Query Optimization', 'Index Tuning (B-Tree/GIN)', 'CTEs & Stored Procedures', 'Automated Daily Backups', 'Connection Pooling (PgBouncer)'].map(s => (
+                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                    {s}
+                  </span>
+                ))}
               </div>
+            </div>
 
-              {/* Divider */}
+            {/* Mobile & Flutter Engineering */}
+            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
+              <div className="flex items-center gap-2 text-[#38bdf8] font-mono text-sm font-bold">
+                <Smartphone size={18} />
+                <span>MOBILE & FLUTTER</span>
+              </div>
+              <p className="text-xs text-[#7a8899]">
+                Cross-platform Android and iOS applications with offline-first data caching and hardware camera integration.
+              </p>
+              <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
+                {['Flutter 3.x', 'Dart', 'Barcode & QR Scanning', 'Haptic Feedback', 'Offline SQLite Sync', 'Provider / Bloc', 'Native Android Plugins'].map(s => (
+                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* AI Integrations & Copilots */}
+            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
+              <div className="flex items-center gap-2 text-[#c084fc] font-mono text-sm font-bold">
+                <Bot size={18} />
+                <span>AI & COPILOT WORKFLOWS</span>
+              </div>
+              <p className="text-xs text-[#7a8899]">
+                Integrating LLMs (Grok, OpenAI GPT-4o, Claude) into workflow automation and intelligent code development.
+              </p>
+              <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
+                {['xAI Grok 2', 'OpenAI GPT-4o', 'Claude 3.5 Sonnet', 'Prompt Engineering', 'Streaming APIs', 'Code Scaffolding', 'Document Intelligence'].map(s => (
+                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Frontend & Modern Web */}
+            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
+              <div className="flex items-center gap-2 text-[#fbbf24] font-mono text-sm font-bold">
+                <Code2 size={18} />
+                <span>FRONTEND & COMMAND UI</span>
+              </div>
+              <p className="text-xs text-[#7a8899]">
+                Ultra-responsive, high-density developer consoles, telemetry charts, and mission-control portals.
+              </p>
+              <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
+                {['React 18', 'TypeScript', 'Tailwind CSS', 'Vite', 'Lucide Icons', 'HTML5/Canvas', 'State Management'].map(s => (
+                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Enterprise Operations & Logistics */}
+            <div className="p-5 bg-[#101318] border border-[#1e2330] rounded-[4px] space-y-3">
+              <div className="flex items-center gap-2 text-[#f43f5e] font-mono text-sm font-bold">
+                <Shield size={18} />
+                <span>ENTERPRISE LOGISTICS</span>
+              </div>
+              <p className="text-xs text-[#7a8899]">
+                Domain expertise in airport store operations, aviation calibration cycles, parts serialization, and material auditing.
+              </p>
+              <div className="flex flex-wrap gap-1.5 font-mono text-[10.5px]">
+                {['UUDS Airport Stores', 'Aviation MRO Standards', 'Batch Lifecycle Tracking', 'Warehouse Bin Allocation', 'Calibration Alerts', 'Operator Audit Logs'].map(s => (
+                  <span key={s} className="px-2 py-1 bg-[#141820] text-[#dce4f0] border border-[#252c3a] rounded-[2px]">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── TAB CONTENT 4: OPERATOR CONSOLE AUTH ────────────────────── */}
+      {activeTab === 'auth' && (
+        <section className="flex-1 max-w-xl mx-auto w-full p-4 sm:p-8 flex items-center justify-center">
+          <div className="w-full bg-[#101318] border border-[#252c3a] rounded-[4px] shadow-2xl overflow-hidden font-mono">
+            <div className="px-5 py-3.5 bg-[#0d1017] border-b border-[#1e2330] flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs text-[#00d4c8] font-bold">
+                <Shield size={14} />
+                <span>OPERATOR CONSOLE ACCESS</span>
+              </div>
+              <span className="text-[10px] text-[#10b981] font-bold">ENCRYPTED TLS 1.3</span>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <button
+                type="button"
+                onClick={() => navigate('/dashboard')}
+                className="w-full py-3 bg-[#00d4c8] hover:bg-[#00e5d8] text-black font-black text-xs rounded-[3px] flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(0,212,200,0.35)] cursor-pointer"
+              >
+                <Zap size={15} className="fill-black" />
+                <span>1-CLICK INSTANT START (BYPASS)</span>
+                <ChevronRight size={15} />
+              </button>
+
               <div className="flex items-center gap-2 pt-1">
                 <div className="flex-1 h-px bg-[#1e2330]" />
-                <span className="font-mono text-[9px] text-[#55637a] uppercase tracking-widest font-bold">
-                  OR AUTHENTICATE CREDENTIALS
-                </span>
+                <span className="text-[9px] text-[#55637a] uppercase">OR LOGIN WITH USERNAME</span>
                 <div className="flex-1 h-px bg-[#1e2330]" />
               </div>
 
-              {/* Auth Form */}
-              <form onSubmit={handleLogin} className="space-y-3">
-                {/* Username */}
+              <form onSubmit={handleLogin} className="space-y-3 text-xs">
                 <div>
-                  <label className="block font-mono text-[10px] tracking-wider mb-1 text-[#7a8899] font-bold uppercase">
+                  <label className="block text-[#7a8899] text-[10px] uppercase font-bold mb-1">
                     OPERATOR ID / USERNAME
                   </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      placeholder="e.g. khurram.munir or admin"
-                      className="w-full bg-[#141820] text-xs font-mono text-[#dce4f0] px-3 py-2 border border-[#252c3a] focus:border-[#00d4c8] outline-none rounded-[2px] transition-colors"
-                    />
-                    <UserCheck size={13} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#55637a]" />
-                  </div>
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full bg-[#141820] text-xs text-[#dce4f0] px-3 py-2 border border-[#252c3a] focus:border-[#00d4c8] outline-none rounded-[2px]"
+                  />
                 </div>
 
-                {/* Password */}
                 <div>
-                  <label className="block font-mono text-[10px] tracking-wider mb-1 text-[#7a8899] font-bold uppercase">
-                    ACCESS KEY / SECURITY PASSWORD
+                  <label className="block text-[#7a8899] text-[10px] uppercase font-bold mb-1">
+                    ACCESS KEY / PASSWORD
                   </label>
                   <div className="relative">
                     <input
                       type={showPass ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter password"
-                      className="w-full bg-[#141820] text-xs font-mono text-[#dce4f0] px-3 py-2 pr-10 border border-[#252c3a] focus:border-[#00d4c8] outline-none rounded-[2px] transition-colors"
+                      className="w-full bg-[#141820] text-xs text-[#dce4f0] px-3 py-2 pr-10 border border-[#252c3a] focus:border-[#00d4c8] outline-none rounded-[2px]"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPass(!showPass)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#55637a] hover:text-[#dce4f0] transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#55637a] hover:text-[#dce4f0]"
                     >
                       {showPass ? <EyeOff size={13} /> : <Eye size={13} />}
                     </button>
                   </div>
                 </div>
 
-                {/* Error */}
-                {error && (
-                  <div className="p-2 bg-[#ef444415] border border-[#ef444430] text-[#ef4444] font-mono text-xs rounded-[2px]">
-                    {error}
-                  </div>
-                )}
-
-                {/* Submit */}
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full py-2.5 bg-[#182232] hover:bg-[#202c40] text-[#00d4c8] border border-[#00d4c850] font-mono font-bold text-xs tracking-wider rounded-[2px] flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  disabled={authLoading}
+                  className="w-full py-2.5 bg-[#182232] hover:bg-[#202c40] text-[#00d4c8] border border-[#00d4c850] font-bold text-xs rounded-[2px] flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {loading ? (
-                    <>
-                      <RefreshCw size={13} className="animate-spin" />
-                      <span>VERIFYING CREDENTIALS...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Lock size={13} />
-                      <span>AUTHENTICATE & ENTER CONSOLE</span>
-                    </>
-                  )}
+                  {authLoading ? 'AUTHENTICATING...' : 'AUTHENTICATE & ENTER'}
                 </button>
               </form>
 
-              {/* Pre-configured Credentials Guide */}
-              <div className="p-2.5 bg-[#0a0c10] border border-[#1e2330] rounded-[2px] font-mono text-[10px] text-[#7a8899] space-y-1">
-                <div className="flex items-center gap-1.5 text-[#00d4c8] font-bold uppercase">
+              <div className="p-2.5 bg-[#0a0c10] border border-[#1e2330] rounded-[2px] text-[10px] text-[#7a8899] space-y-1">
+                <div className="flex items-center gap-1.5 text-[#00d4c8] font-bold">
                   <KeyRound size={11} /> PRE-CONFIGURED CREDENTIALS:
                 </div>
                 <div className="flex justify-between">
-                  <span>User: <code className="text-[#dce4f0]">{username}</code></span>
-                  <span>Pass: <code className="text-[#dce4f0]">{password}</code></span>
-                </div>
-                <div className="text-[8.5px] text-[#55637a]">
-                  (Any ID and password will authenticate into the system)
+                  <span>User: <code className="text-[#dce4f0]">khurram.munir</code></span>
+                  <span>Pass: <code className="text-[#dce4f0]">devhub2026</code></span>
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+      )}
 
-            {/* Footer Status Strip */}
-            <div className="px-5 py-2 bg-[#0d1017] border-t border-[#1e2330] flex items-center justify-between font-mono text-[9px] text-[#55637a]">
-              <span className="flex items-center gap-1">
-                <Server size={10} className="text-[#00d4c8]" /> NODE: DXB_STORES_PRIMARY
-              </span>
-              <span className="text-[#10b981] font-bold">STATUS: AUTHORIZED</span>
-            </div>
+      {/* ── FOOTER ─────────────────────────────────────────────────── */}
+      <footer
+        className={`w-full px-4 sm:px-8 py-6 border-t mt-auto font-mono text-xs ${
+          isLight ? 'bg-[#ffffff] border-[#e2e8f0]' : 'bg-[#0a0c10] border-[#1a1f2c]'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2 text-[#7a8899]">
+            <span className="font-bold text-[#dce4f0]">Khurram Munir Basra</span>
+            <span>•</span>
+            <span>Lead Full Stack Architect & Systems Engineer</span>
+          </div>
+
+          <div className="flex items-center gap-4 text-[#55637a] text-[11px]">
+            <span>NODE: DXB_STORES_PRODUCTION</span>
+            <span>BUILD: v2.4.0 PRO</span>
+            <span className="text-[#10b981] font-bold">100% OPERATIONAL</span>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
